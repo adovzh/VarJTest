@@ -39,7 +39,7 @@ public class CGLibIncTest {
     @Test
     public void multiple() {
         Inc measured  = factory.createMeasuredInc();
-        int step = 10000;
+        int step = 1000000;
 
         assertNotNull(measured);
         assertEquals(step, measured.incMultiple(step));
