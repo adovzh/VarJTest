@@ -3,11 +3,11 @@ package dan.vjtest.sandbox.multimethods;
 /**
  * @author Alexander Dovzhikov
  */
-abstract public class SpaceObject implements SpaceVisitor {
+abstract public class SpaceObject {
 
-    public void collideWith(SpaceObject spaceObject) {
-        accept(spaceObject);
-    }
+    public abstract void collideWith(SpaceObject spaceObject);
 
-    public abstract void accept(SpaceVisitor visitor);
+    public abstract void collideWithAsteroid(Asteroid asteroid);
+
+    public abstract void collideWithSpaceship(Spaceship spaceship);
 }
