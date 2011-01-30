@@ -1,5 +1,6 @@
 package dan.vjtest.cglib;
 
+import net.sf.cglib.proxy.CallbackHelper;
 import net.sf.cglib.proxy.Enhancer;
 
 /**
@@ -12,8 +13,8 @@ public class IncFactory {
     }
 
     public Inc createMeasuredInc() {
-        MeasuredFilter filter = new MeasuredFilter();
-        
+        CallbackHelper filter = new MeasuredFilter();
+
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(IncImpl.class);
         enhancer.setCallbackFilter(filter);
