@@ -1,0 +1,8 @@
+1. Annotations project.
+
+Various useful annotations, such as:
+- try/catch/finally wrapper
+- something working with I/O error handling, possibly see previous
+- GuardedBy, as described in Concurrency In Practice (or better)
+- NotNull (and runtime result checking)
+- Time measuring
