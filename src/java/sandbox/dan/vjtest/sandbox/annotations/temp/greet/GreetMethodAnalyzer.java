@@ -13,6 +13,7 @@ public class GreetMethodAnalyzer extends MethodAdapter {
 
     private boolean greet = false;
     private boolean bye = false;
+    private boolean notNull = false;
 
     public GreetMethodAnalyzer(MethodVisitor mv, String name) {
         super(mv);
@@ -24,6 +25,7 @@ public class GreetMethodAnalyzer extends MethodAdapter {
     public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
         greet |= Type.getDescriptor(Greet.class).equals(desc);
         bye |= Type.getDescriptor(Bye.class).equals(desc);
+        notNull |= Type.getDescriptor(NotNull.class).equals(desc);
 
         return super.visitAnnotation(desc, visible);
     }
@@ -47,6 +49,20 @@ public class GreetMethodAnalyzer extends MethodAdapter {
             mv.visitLdcInsn("Goodbye, " + methodName);
             mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, Type.getInternalName(PrintStream.class), "println",
                     Type.getMethodDescriptor(Type.VOID_TYPE, new Type[] {Type.getType(String.class)}));
+        }
+
+        if (notNull && opcode == Opcodes.ARETURN) {
+            Label notNullLabel = new Label();
+
+            mv.visitInsn(Opcodes.DUP);
+            mv.visitJumpInsn(Opcodes.IFNONNULL, notNullLabel);
+            mv.visitTypeInsn(Opcodes.NEW, Type.getInternalName(IllegalStateException.class));
+            mv.visitInsn(Opcodes.DUP);
+            mv.visitLdcInsn("Not null constraint violated");
+            mv.visitMethodInsn(Opcodes.INVOKESPECIAL, Type.getInternalName(IllegalStateException.class), "<init>",
+                    Type.getMethodDescriptor(Type.VOID_TYPE, new Type[] {Type.getType(String.class)}));
+            mv.visitInsn(Opcodes.ATHROW);
+            mv.visitLabel(notNullLabel);
         }
 
         mv.visitInsn(opcode);
