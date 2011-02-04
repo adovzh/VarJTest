@@ -24,8 +24,9 @@ public class GreetAnalyzer extends ClassAdapter {
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         MethodVisitor methodVisitor = super.visitMethod(access, name, desc, signature, exceptions);
 
-        if (methodVisitor != null)
-            methodVisitor = new GreetMethodAnalyzer(methodVisitor, name);
+        if (methodVisitor != null) {
+            methodVisitor = new GreetMethodVisitor(new ByeMethodVisitor(new NotNullMethodVisitor(methodVisitor), name, desc), name, desc);
+        }
 
         return methodVisitor;
     }
