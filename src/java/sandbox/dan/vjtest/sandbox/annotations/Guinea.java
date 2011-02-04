@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.annotations.temp.greet;
+package dan.vjtest.sandbox.annotations;
 
 /**
  * @author Alexander Dovzhikov

@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.annotations.temp.greet;
+package dan.vjtest.sandbox.annotations;
 
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.MethodVisitor;

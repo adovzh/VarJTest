@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.annotations.temp.greet;
+package dan.vjtest.sandbox.annotations;
 
 import org.objectweb.asm.*;
 
@@ -7,16 +7,16 @@ import java.io.IOException;
 /**
  * @author Alexander Dovzhikov
  */
-public class GreetAnalyzer extends ClassAdapter {
+public class AnnotationsClassVisitor extends ClassAdapter {
 
     public static void main(String[] args) throws IOException {
         ClassReader reader = new ClassReader(Guinea.class.getName());
         ClassWriter writer = new ClassWriter(reader, 0);
 
-        reader.accept(new GreetAnalyzer(writer), 0);
+        reader.accept(new AnnotationsClassVisitor(writer), 0);
     }
 
-    public GreetAnalyzer(ClassVisitor cv) {
+    public AnnotationsClassVisitor(ClassVisitor cv) {
         super(cv);
     }
 

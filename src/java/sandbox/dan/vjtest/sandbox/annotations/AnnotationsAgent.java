@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.annotations.temp.greet;
+package dan.vjtest.sandbox.annotations;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -11,10 +11,10 @@ import java.security.ProtectionDomain;
 /**
  * @author Alexander Dovzhikov
  */
-public class GreetingAgent implements ClassFileTransformer {
+public class AnnotationsAgent implements ClassFileTransformer {
 
     public static void premain(String argument, Instrumentation instrumentation) {
-        instrumentation.addTransformer(new GreetingAgent());
+        instrumentation.addTransformer(new AnnotationsAgent());
     }
 
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
@@ -24,7 +24,7 @@ public class GreetingAgent implements ClassFileTransformer {
         ClassReader reader = new ClassReader(classfileBuffer);
         ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_MAXS);
 
-        reader.accept(new GreetAnalyzer(writer), 0);
+        reader.accept(new AnnotationsClassVisitor(writer), 0);
 
         return writer.toByteArray();
     }
