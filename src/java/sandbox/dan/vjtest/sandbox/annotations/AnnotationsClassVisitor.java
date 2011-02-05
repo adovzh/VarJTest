@@ -1,20 +1,13 @@
 package dan.vjtest.sandbox.annotations;
 
-import org.objectweb.asm.*;
-
-import java.io.IOException;
+import org.objectweb.asm.ClassAdapter;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.MethodVisitor;
 
 /**
  * @author Alexander Dovzhikov
  */
 public class AnnotationsClassVisitor extends ClassAdapter {
-
-    public static void main(String[] args) throws IOException {
-        ClassReader reader = new ClassReader(Guinea.class.getName());
-        ClassWriter writer = new ClassWriter(reader, 0);
-
-        reader.accept(new AnnotationsClassVisitor(writer), 0);
-    }
 
     public AnnotationsClassVisitor(ClassVisitor cv) {
         super(cv);
