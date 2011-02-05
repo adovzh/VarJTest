@@ -1,0 +1,48 @@
+<project name="VarJTest" default="all" basedir=".">
+
+    <property name="src" value="src"/>
+    <property name="src.java" value="${src}/java"/>
+    <property name="src.sandbox" value="${src.java}/sandbox"/>
+    <property name="src.config" value="${src}/config"/>
+    <property name="src.config.sandbox" value="${src.config}/sandbox"/>
+
+    <property name="build" value="build"/>
+    <property name="build.sandbox" value="${build}/sandbox"/>
+
+    <property name="lib" value="lib"/>
+
+    <path id="classpath">
+        <fileset dir="${lib}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="init">
+        <mkdir dir="${build}"/>
+        <mkdir dir="${build.sandbox}"/>
+    </target>
+
+    <target name="compile.sandbox" depends="init">
+        <javac
+            srcdir="${src.sandbox}"
+            destdir="${build.sandbox}"
+            classpathref="classpath"/>
+        <copy todir="${build.sandbox}">
+            <fileset dir="${src.config.sandbox}"/>
+        </copy>
+    </target>
+
+    <target name="sandbox.jar" depends="compile.sandbox">
+        <jar jarfile="${build}/sandbox.jar" manifest="${build.sandbox}/META-INF/MANIFEST.MF">
+            <fileset dir="${build.sandbox}"/>
+        </jar>
+    </target>
+
+    <target name="all" depends="sandbox.jar">
+
+    </target>
+
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+</project>
