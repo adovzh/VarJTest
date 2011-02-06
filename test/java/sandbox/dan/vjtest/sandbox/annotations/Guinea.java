@@ -13,7 +13,7 @@ public class Guinea {
             g.byeMethod();
             g.anotherGreetMethod();
             g.notNullMethod(1);
-            g.notNullNullableMethod();
+            g.notNullSpecialMethod();
         } catch (Exception e) {
             Thread.sleep(500L);
             e.printStackTrace();
@@ -47,8 +47,9 @@ public class Guinea {
         return var;
     }
 
-    public Object notNullNullableMethod() {
-        System.out.println("notNullNullableMethod");
+    @NotNull("Method is supposed to return null")
+    public Object notNullSpecialMethod() {
+        System.out.println("notNullSpecialMethod");
 
         return null;
     }

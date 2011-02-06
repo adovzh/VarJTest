@@ -1,5 +1,6 @@
 package dan.vjtest.sandbox.annotations;
 
+import dan.vjtest.sandbox.annotations.util.AnnotationAdapter;
 import org.objectweb.asm.*;
 
 /**
@@ -9,6 +10,7 @@ public class NotNullMethodVisitor extends MethodAdapter {
     private static final String NOTNULL_DESCRIPTOR = Type.getDescriptor(NotNull.class);
 
     private boolean notNull;
+    private String errorMessage;
 
     public NotNullMethodVisitor(MethodVisitor mv) {
         super(mv);
@@ -17,7 +19,29 @@ public class NotNullMethodVisitor extends MethodAdapter {
     @Override
     public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
         notNull |= NOTNULL_DESCRIPTOR.equals(desc);
-        return super.visitAnnotation(desc, visible);
+
+        final AnnotationVisitor visitor = super.visitAnnotation(desc, visible);
+        AnnotationVisitor result = visitor;
+
+        if (result != null && notNull) {
+            try {
+                errorMessage = NotNull.class.getDeclaredMethod("value").getDefaultValue().toString();
+            } catch (NoSuchMethodException e) {
+                errorMessage = "Strange Message";
+            }
+
+            result = new AnnotationAdapter(visitor) {
+                @Override
+                public void visit(String name, Object value) {
+                    if ("value".equals(name))
+                        errorMessage = value.toString();
+
+                    super.visit(name, value);
+                }
+            };
+        }
+
+        return result;
     }
 
     @Override
@@ -29,7 +53,8 @@ public class NotNullMethodVisitor extends MethodAdapter {
             mv.visitJumpInsn(Opcodes.IFNONNULL, notNullLabel);
             mv.visitTypeInsn(Opcodes.NEW, "java/lang/IllegalStateException");
             mv.visitInsn(Opcodes.DUP);
-            mv.visitLdcInsn("Not null constraint violated");
+//            mv.visitLdcInsn("Not null constraint violated");
+            mv.visitLdcInsn(errorMessage);
             mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/IllegalStateException", "<init>", "(Ljava/lang/String;)V");
             mv.visitInsn(Opcodes.ATHROW);
             mv.visitLabel(notNullLabel);

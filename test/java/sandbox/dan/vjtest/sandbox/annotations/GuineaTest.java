@@ -31,9 +31,30 @@ public class GuineaTest {
 
         try {
             guinea.notNullMethod(2);
-            Assert.fail();
+            Assert.fail("IllegalStateException must be thrown");
         } catch (IllegalStateException e) {
-            // ok
+            try {
+                Assert.assertEquals(NotNull.class.getDeclaredMethod("value").getDefaultValue(), e.getMessage());
+            } catch (NoSuchMethodException e1) {
+                Assert.fail();
+            }
+
+        }
+    }
+
+    @Test
+    public void notNullSpecial() {
+        try {
+            guinea.notNullSpecialMethod();
+            Assert.fail("IllegalStateException must be thrown");
+        } catch (IllegalStateException e) {
+            try {
+                Assert.assertEquals(
+                        Guinea.class.getMethod("notNullSpecialMethod").getAnnotation(NotNull.class).value(),
+                        e.getMessage());
+            } catch (NoSuchMethodException e1) {
+                Assert.fail();
+            }
         }
     }
 }
