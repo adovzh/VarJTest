@@ -31,6 +31,7 @@ public class Guinea {
     }
 
     @Greet
+    @Bye
     public void anotherGreetMethod() {
         System.out.println("anotherGreetMethod");
     }
