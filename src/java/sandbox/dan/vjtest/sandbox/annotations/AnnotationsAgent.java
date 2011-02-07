@@ -21,6 +21,12 @@ public class AnnotationsAgent implements ClassFileTransformer {
         if (!className.endsWith("Guinea"))
             return classfileBuffer;
 
+        // TODO: analise code for the annotations of interest first
+        // TODO: change the byte code only after that
+        // TODO: build the chain of visitors per annotation
+
+        // TODO: extract annotations to a separate jar
+
         ClassReader reader = new ClassReader(classfileBuffer);
         ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_MAXS);
 
