@@ -6,4 +6,4 @@ Various useful annotations, such as:
 - GuardedBy, as described in Concurrency In Practice (or better)
 - NotNull (and runtime result checking)
 - Time measuring
-- parameter assertion rules
+- preconditions, postconditions, invariants (Design By Contract) and parameter assertion rules
