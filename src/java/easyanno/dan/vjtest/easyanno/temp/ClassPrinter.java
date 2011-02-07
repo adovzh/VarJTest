@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.annotations.temp;
+package dan.vjtest.easyanno.temp;
 
 import org.objectweb.asm.*;
 
@@ -13,7 +13,7 @@ public class ClassPrinter implements ClassVisitor {
 
     public static void main(String[] args) throws IOException {
         ClassPrinter cp = new ClassPrinter();
-        ClassReader cr = new ClassReader("dan.vjtest.sandbox.annotations.temp.ClassPrinter");
+        ClassReader cr = new ClassReader("dan.vjtest.sandbox.easyanno.temp.ClassPrinter");
         cr.accept(cp, 0);
     }
 

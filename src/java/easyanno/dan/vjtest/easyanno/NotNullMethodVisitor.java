@@ -1,6 +1,6 @@
-package dan.vjtest.sandbox.annotations;
+package dan.vjtest.easyanno;
 
-import dan.vjtest.sandbox.annotations.util.AnnotationAdapter;
+import dan.vjtest.easyanno.util.AnnotationAdapter;
 import org.objectweb.asm.*;
 
 /**

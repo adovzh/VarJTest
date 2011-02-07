@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.annotations;
+package dan.vjtest.easyanno;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -24,8 +24,6 @@ public class AnnotationsAgent implements ClassFileTransformer {
         // TODO: analise code for the annotations of interest first
         // TODO: change the byte code only after that
         // TODO: build the chain of visitors per annotation
-
-        // TODO: extract annotations to a separate jar
 
         ClassReader reader = new ClassReader(classfileBuffer);
         ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_MAXS);
