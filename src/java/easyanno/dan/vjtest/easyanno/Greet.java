@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.annotations;
+package dan.vjtest.easyanno;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

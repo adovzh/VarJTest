@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.annotations.temp;
+package dan.vjtest.easyanno.temp;
 
 /**
  * @author Alexander Dovzhikov

@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.annotations;
+package dan.vjtest.easyanno;
 
 /**
  * @author Alexander Dovzhikov
@@ -31,6 +31,7 @@ public class Guinea {
     }
 
     @Greet
+    @Bye
     public void anotherGreetMethod() {
         System.out.println("anotherGreetMethod");
     }

@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.annotations;
+package dan.vjtest.easyanno;
 
 import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassVisitor;

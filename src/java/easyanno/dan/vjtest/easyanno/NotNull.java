@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.annotations;
+package dan.vjtest.easyanno;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,5 +10,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Bye {
+public @interface NotNull {
+    String value() default "Not null constraint violated";
 }

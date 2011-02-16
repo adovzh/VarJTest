@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: dan.vjtest.sandbox.annotations.Guinea
-Premain-Class: dan.vjtest.sandbox.annotations.AnnotationsAgent

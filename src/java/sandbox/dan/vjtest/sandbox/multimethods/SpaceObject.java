@@ -3,7 +3,7 @@ package dan.vjtest.sandbox.multimethods;
 /**
  * @author Alexander Dovzhikov
  */
-abstract public class SpaceObject {
+public abstract class SpaceObject {
 
     public abstract void collideWith(SpaceObject spaceObject);
 

@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.annotations.util;
+package dan.vjtest.easyanno.util;
 
 import org.objectweb.asm.AnnotationVisitor;
 
