@@ -52,7 +52,7 @@ public class VerticalGradientPaintContext implements PaintContext {
         cached = new WeakReference<WritableRaster>(raster);
     }
 
-    private ColorModel model; // = ColorModel.getRGBdefault();
+    private ColorModel model;
     private WritableRaster saved;
 
     private final int topY;
@@ -71,7 +71,6 @@ public class VerticalGradientPaintContext implements PaintContext {
 
         if ((topAlpha & bottomAlpha) == 0xff) {
             model = XRGB_MODEL;
-            System.out.println("XRGB");
 
             if (colorModel instanceof DirectColorModel) {
                 DirectColorModel dcm = (DirectColorModel) colorModel;
@@ -82,7 +81,6 @@ public class VerticalGradientPaintContext implements PaintContext {
                         && dcm.getGreenMask() == 0xff00
                         && dcm.getBlueMask() == 0xff0000) {
                     model = XBGR_MODEL;
-                    System.out.println("XBGR");
                 }
             }
         } else {
@@ -102,7 +100,6 @@ public class VerticalGradientPaintContext implements PaintContext {
     }
 
     public Raster getRaster(int x, int y, int w, int h) {
-//        WritableRaster raster = model.createCompatibleWritableRaster(w, h);
         WritableRaster raster = saved;
 
         if (raster == null || raster.getWidth() < w || raster.getHeight() < h) {
