@@ -10,7 +10,7 @@ import java.awt.geom.Ellipse2D;
  */
 public class GradientPanel extends JPanel {
     private Color topColor = Color.BLUE;
-    private Color bottomColor = new Color(0x7fff0000, true);
+    private Color bottomColor = new Color(0xdfff0000, true);
 
     public GradientPanel() {
         setOpaque(false);

@@ -1,10 +1,7 @@
 package dan.vjtest.sandbox.swing.paint;
 
 import java.awt.*;
-import java.awt.image.ColorModel;
-import java.awt.image.DirectColorModel;
-import java.awt.image.Raster;
-import java.awt.image.WritableRaster;
+import java.awt.image.*;
 import java.lang.ref.WeakReference;
 
 /**
@@ -15,45 +12,36 @@ public class VerticalGradientPaintContext implements PaintContext {
     private static final ColorModel XBGR_MODEL = new DirectColorModel(24, 0x000000ff, 0x0000ff00, 0x00ff0000);
 
     private static ColorModel cachedModel;
-    private static WeakReference<WritableRaster> cached;
+    private static WeakReference<RasterBuffer> cached;
 
-    private static synchronized WritableRaster getCachedRaster(ColorModel colorModel, int w, int h) {
+    private static synchronized RasterBuffer getCachedRaster(ColorModel colorModel, int w, int h) {
         if (colorModel == cachedModel && cached != null) {
-            WritableRaster raster = cached.get();
+            RasterBuffer buffer = cached.get();
 
-            if (raster != null && raster.getWidth() >= w && raster.getHeight() >= h) {
+            if (buffer != null && buffer.getLength() >= w * h) {
                 cached = null;
-                return raster;
+                return buffer;
             }
         }
 
-        return colorModel.createCompatibleWritableRaster(w, h);
+        return new RasterBuffer(colorModel, w, h);
     }
 
-    private static synchronized void putCachedRaster(ColorModel colorModel, WritableRaster raster) {
+    private static synchronized void putCachedRaster(ColorModel colorModel, RasterBuffer buffer) {
         if (cached != null) {
-            WritableRaster cachedRaster = cached.get();
+            RasterBuffer cachedBuffer = cached.get();
 
-            if (cachedRaster != null) {
-                int cachedWidth = cachedRaster.getWidth();
-                int cachedHeight = cachedRaster.getHeight();
-                int width = raster.getWidth();
-                int height = raster.getHeight();
-
-                if (cachedWidth >= width && cachedHeight >= height)
-                    return;
-
-                if (cachedWidth * cachedHeight >= width * height)
-                    return;
+            if (cachedBuffer != null && cachedBuffer.getLength() >= buffer.getLength()) {
+                return;
             }
         }
 
         cachedModel = colorModel;
-        cached = new WeakReference<WritableRaster>(raster);
+        cached = new WeakReference<RasterBuffer>(buffer);
     }
 
     private ColorModel model;
-    private WritableRaster saved;
+    private RasterBuffer saved;
 
     private final int topY;
     private final int bottomY;
@@ -100,14 +88,13 @@ public class VerticalGradientPaintContext implements PaintContext {
     }
 
     public Raster getRaster(int x, int y, int w, int h) {
-        WritableRaster raster = saved;
+        RasterBuffer buffer = saved;
 
-        if (raster == null || raster.getWidth() < w || raster.getHeight() < h) {
-            saved = raster = getCachedRaster(model, w, h);
+        if (buffer == null || buffer.getLength() < w * h) {
+            saved = buffer = getCachedRaster(model, w, h);
         }
 
-        int[] packedPixels = new int[w * h];
-        int i = 0;
+        int[] packedPixels = buffer.getData();
         int j = 0;
 
         for (int py = 0; py < h; py++) {
@@ -119,9 +106,7 @@ public class VerticalGradientPaintContext implements PaintContext {
             }
         }
 
-        raster.setDataElements(0, 0, w, h, packedPixels);
-
-        return raster;
+        return buffer.getRaster();
     }
 
     private Color mixDown(Color c1, Color c2, float balance) {
