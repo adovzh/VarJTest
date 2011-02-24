@@ -39,9 +39,10 @@ public class Genie {
         int x2 = (int) (w * p2);
 
         p = Math.min(p * 2, 1);
+        int delta = (int) (Math.max(p * 2 - 1, 0) * h);
 
-        for (int j = 0; j < h; j++) {
-            sourceRaster.getDataElements(0, j, w, 1, sourceRow);
+        for (int j = 0; j < h - delta; j++) {
+            sourceRaster.getDataElements(0, j + delta, w, 1, sourceRow);
 
             int start = (int) (x1 * p);
             int end = (int) (w - (w - x2) * p);
