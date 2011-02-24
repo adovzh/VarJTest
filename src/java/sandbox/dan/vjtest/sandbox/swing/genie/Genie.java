@@ -9,13 +9,15 @@ import java.awt.image.WritableRaster;
  * @author Alexander Dovzhikov
  */
 public class Genie {
-    private final int x1;
-    private final int x2;
+//    private final int x1;
+//    private final int x2;
+    private final double p1;
+    private final double p2;
     private Raster sourceRaster = null;
 
-    public Genie(int x1, int x2) {
-        this.x1 = x1;
-        this.x2 = x2;
+    public Genie(double p1, double p2) {
+        this.p1 = p1;
+        this.p2 = p2;
     }
 
     public void setSourceImage(BufferedImage sourceImage) {
@@ -33,6 +35,10 @@ public class Genie {
 
         int[] sourceRow = new int[w];
         int[] row = new int[w];
+        int x1 = (int) (w * p1);
+        int x2 = (int) (w * p2);
+
+        p = Math.min(p * 2, 1);
 
         for (int j = 0; j < h; j++) {
             sourceRaster.getDataElements(0, j, w, 1, sourceRow);
@@ -43,7 +49,7 @@ public class Genie {
             start *= (1 - (double)j / h);
             end += (w - end) * j / h;
 
-            System.out.printf("(%d,%d)%n", start, end);
+//            System.out.printf("(%d,%d)%n", start, end);
 
             for (int i = 0; i < w; i++) {
                 if (i >= start && i < end) {
@@ -57,7 +63,7 @@ public class Genie {
             raster.setDataElements(0, j, w, 1, row);
         }
 
-        System.out.println("=========");
+//        System.out.println("=========");
 
         return image;
     }

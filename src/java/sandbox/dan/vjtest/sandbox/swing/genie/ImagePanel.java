@@ -22,7 +22,7 @@ public class ImagePanel extends JPanel implements AnimationTracker {
     public ImagePanel(String path) {
         this.imageIcon = new ImageIcon(getClass().getResource(path));
         this.pref = new Dimension(imageIcon.getIconWidth(), imageIcon.getIconHeight());
-        this.genie = new Genie(100, 200);
+        this.genie = new Genie(0.2, 0.3);
         genie.setSourceImage(createBufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight()));
         animationAdvanced(0);
         animation.setListener(this);
@@ -53,7 +53,8 @@ public class ImagePanel extends JPanel implements AnimationTracker {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics g = image.createGraphics();
 //        paintComponent(g);
-        imageIcon.paintIcon(this, g, 0, 0);
+//        imageIcon.paintIcon(this, g, 0, 0);
+        g.drawImage(imageIcon.getImage(), 0, 0, width, height, this);
         g.dispose();
 
         return image;

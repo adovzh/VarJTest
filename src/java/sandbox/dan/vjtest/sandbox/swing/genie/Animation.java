@@ -18,7 +18,7 @@ public class Animation implements ActionListener {
         state = 0;
         step = -0.05;
 
-        timer = new Timer(100, this);
+        timer = new Timer(50, this);
     }
 
     public void animate() {
