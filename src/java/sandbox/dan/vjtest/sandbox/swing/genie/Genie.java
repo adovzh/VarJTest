@@ -9,8 +9,6 @@ import java.awt.image.WritableRaster;
  * @author Alexander Dovzhikov
  */
 public class Genie {
-//    private final int x1;
-//    private final int x2;
     private final double p1;
     private final double p2;
     private Raster sourceRaster = null;
