@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.util.tmpext;
+package dan.vjtest.sandbox.util;
 
 /**
  * @author Alexander Dovzhikov
@@ -54,21 +54,17 @@ public class BIntNode {
             child.add(key);
         }
 
-        if (checkSize() && parent != null) {
+        if (checkFull() && parent != null) {
             split(parent);
         }
     }
 
     public void split(BIntNode parent) {
-        BIntNode left = new BIntNode(order, this, 0, order / 2);
-        BIntNode right = new BIntNode(order, this, order / 2 + 1, order - order / 2 - 1);
+        int medianIndex = order / 2;
+        BIntNode left = new BIntNode(order, this, 0, medianIndex);
+        BIntNode right = new BIntNode(order, this, medianIndex + 1, order - medianIndex - 1);
 
-        left.parent = parent;
-        right.parent = parent;
-
-        // todo: code duplication detected
-        int median = keys[order / 2];
-        parent.insert(median, left, right);
+        parent.insert(keys[medianIndex], left, right);
     }
 
     private void insert(int key, BIntNode left, BIntNode right) {
@@ -80,6 +76,9 @@ public class BIntNode {
             index++;
         }
 
+        left.parent = this;
+        right.parent = this;
+
         System.arraycopy(keys, index, keys, index + 1, size - index);
         keys[index] = key;
         System.arraycopy(nodes, index + 1, nodes, index + 2, size - index);
@@ -88,7 +87,7 @@ public class BIntNode {
         size++;
     }
 
-    public boolean checkSize() {
+    public boolean checkFull() {
         return (size >= order);
     }
 

@@ -1,4 +1,4 @@
-package dan.vjtest.sandbox.util.tmpext;
+package dan.vjtest.sandbox.util;
 
 /**
  * @author Alexander Dovzhikov
@@ -18,7 +18,7 @@ public class BIntTree {
         root.add(key);
 
         // todo: code duplication detected
-        if (root.checkSize()) {
+        if (root.checkFull()) {
             BIntNode newRoot = new BIntNode(order);
             root.split(newRoot);
             root = newRoot;
@@ -27,7 +27,7 @@ public class BIntTree {
 
     public static void main(String[] args) {
         // todo: replace with unit test
-        BIntTree tree = new BIntTree(5);
+        BIntTree tree = new BIntTree(6);
 
         for (int i = 1; i <= 20; i++) {
             tree.insert(i);
