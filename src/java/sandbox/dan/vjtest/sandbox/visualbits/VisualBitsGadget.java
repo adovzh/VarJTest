@@ -18,15 +18,21 @@ public class VisualBitsGadget extends JPanel {
         final JTextField tf = new JTextField(10);
 
 
-        controls.add(new JButton(new AbstractAction("SHL") {
+        controls.add(new JButton(new AbstractAction("<<") {
             public void actionPerformed(ActionEvent e) {
                 model.shiftLeft(1);
             }
         }));
 
-        controls.add(new JButton(new AbstractAction("SHR") {
+        controls.add(new JButton(new AbstractAction(">>") {
             public void actionPerformed(ActionEvent e) {
                 model.shiftRight(1);
+            }
+        }));
+
+        controls.add(new JButton(new AbstractAction(">>>") {
+            public void actionPerformed(ActionEvent e) {
+                model.unsignedRightShift(1);
             }
         }));
 

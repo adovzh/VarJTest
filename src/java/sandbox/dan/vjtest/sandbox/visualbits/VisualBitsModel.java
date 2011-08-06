@@ -31,6 +31,10 @@ public class VisualBitsModel {
         setValue(getValue() >> bits);
     }
 
+    public void unsignedRightShift(int bits) {
+        setValue(getValue() >>> bits);
+    }
+
     public void addVisualBitsListener(VisualBitsListener listener) {
         listeners.add(VisualBitsListener.class, listener);
     }

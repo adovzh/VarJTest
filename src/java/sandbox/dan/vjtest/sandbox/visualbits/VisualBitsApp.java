@@ -14,7 +14,7 @@ public class VisualBitsApp {
                 JFrame frame = new JFrame("Visual Bits");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.getContentPane().add(new VisualBitsGadget());
-                frame.setSize(300, 200);
+                frame.setSize(500, 200);
                 UIUtil.centerComponent(frame);
                 frame.setVisible(true);
             }

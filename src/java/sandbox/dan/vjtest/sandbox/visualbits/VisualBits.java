@@ -31,7 +31,7 @@ public class VisualBits extends JPanel {
         int i;
 
         for (i = 31; i >= 0; i--) {
-            sb.append(((value & (1 << i)) > 0) ? '1' : '0');
+            sb.append(((value & (1 << i)) != 0) ? '1' : '0');
 
             if (i != 0 && (i & 3) == 0) {
                 sb.append(' ');
