@@ -133,6 +133,14 @@
         <fail if="junit.failure" message="Unit tests failed."/>
     </target>
 
+    <target name="cvgen" depends="compile.sandbox">
+        <java fork="yes" classname="dan.vjtest.sandbox.cvgen.CVGen">
+            <classpath>
+                <pathelement location="${build.sandbox}"/>
+            </classpath>
+        </java>
+    </target>
+
     <target name="all" depends="easyanno.runtests,sandbox.runtests"/>
 
     <target name="clean">

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:fo="http://www.w3.org/1999/XSL/Format">
+    <xsl:output method="xml" indent="yes"/>
+    <xsl:variable name="firstName" select="cv-document/personal/first-name"/>
+    <xsl:variable name="lastName" select="cv-document/personal/last-name"/>
+    <xsl:variable name="applicantName" select="concat($firstName, ' ', $lastName)"/>
+    <xsl:template match="/">
+        <fo:root>
+            <fo:layout-master-set>
+                <fo:simple-page-master master-name="A4-portrait"
+                                       page-height="29.7cm" page-width="21.0cm" margin="2cm">
+                    <fo:region-body/>
+                </fo:simple-page-master>
+            </fo:layout-master-set>
+            <fo:page-sequence master-reference="A4-portrait">
+                <fo:flow flow-name="xsl-region-body">
+                    <fo:block>
+                        Hello, <xsl:value-of select="$applicantName"/>
+                    </fo:block>
+                </fo:flow>
+            </fo:page-sequence>
+        </fo:root>
+        <!--<document>Test text document for <xsl:value-of select="concat($firstName, ' ', $lastName)"/></document>-->
+    </xsl:template>
+</xsl:stylesheet>

@@ -1,0 +1,20 @@
+<cv-document>
+    <personal>
+        <first-name>Alexander</first-name>
+        <last-name>Dovzhikov</last-name>
+        <address>
+            <country>Russia</country>
+            <city>St. Petersburg</city>
+            <street>pr.Slavy,52/1 ap.240</street>
+        </address>
+        <phone type="home">+7 812 453 0557</phone>
+        <phone type="mobile">+7 921 949 2660</phone>
+        <email>alexander.dovzhikov@gmail.com</email>
+        <birthday>1979-09-10</birthday>
+        <marital-status>Married</marital-status>
+        <languages>
+            <language type="native">Russian</language>
+            <language type="fluent">English</language>
+        </languages>
+    </personal>
+</cv-document>
