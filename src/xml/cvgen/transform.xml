@@ -125,6 +125,7 @@
         <xsl:call-template name="section">
             <xsl:with-param name="section-name">EDUCATION</xsl:with-param>
         </xsl:call-template>
+        <xsl:apply-templates select="university"/>
     </xsl:template>
     <xsl:template match="university">
         <fo:block font-family="sans-serif" font-size="11pt" font-weight="bold">
@@ -225,7 +226,6 @@
                   padding-start="2pt">
             <xsl:value-of select="$section-name"/>
         </fo:block>
-        <xsl:apply-templates/>
     </xsl:template>
     <xsl:template name="table-row">
         <xsl:param name="key"/>
