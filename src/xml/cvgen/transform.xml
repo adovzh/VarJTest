@@ -89,54 +89,37 @@
                 </fo:static-content>
                 <!-- main part -->
                 <fo:flow flow-name="xsl-region-body">
-                    <fo:block font-size="12pt"
-                              font-family="sans-serif"
-                              font-weight="bold"
-                              background-color="rgb(230,230,230)"
-                              margin-top="5pt"
-                              margin-bottom="5pt"
-                              padding-top="2pt"
-                              padding-start="2pt">
-                        PERSONAL INFORMATION
-                    </fo:block>
-                    <fo:table font-size="11pt">
-                        <fo:table-column column-width="40mm"/>
-                        <fo:table-column column-width="150mm"/>
-                        <fo:table-body>
-                            <fo:table-row>
-                                <fo:table-cell>
-                                    <fo:block font-weight="bold">Date of birth:</fo:block>
-                                </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block><xsl:value-of select="cv-document/personal/birthday"/></fo:block>
-                                </fo:table-cell>
-                            </fo:table-row>
-                            <fo:table-row>
-                                <fo:table-cell font-weight="bold">
-                                    <fo:block>Marital status:</fo:block>
-                                </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block><xsl:value-of select="cv-document/personal/marital-status"/></fo:block>
-                                </fo:table-cell>
-                            </fo:table-row>
-                            <fo:table-row>
-                                <fo:table-cell font-weight="bold">
-                                    <fo:block>Languages:</fo:block>
-                                </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block>
-                                        <xsl:for-each select="cv-document/personal/languages/language">
-                                            <xsl:value-of select="."/> (<xsl:value-of select="@type"/>)<xsl:if test="position() &lt; last()">, </xsl:if>
-                                        </xsl:for-each>
-                                    </fo:block>
-                                </fo:table-cell>
-                            </fo:table-row>
-                        </fo:table-body>
-                    </fo:table>
                     <xsl:apply-templates/>
                 </fo:flow>
             </fo:page-sequence>
         </fo:root>
+    </xsl:template>
+    <xsl:template match="personal">
+        <xsl:call-template name="section">
+            <xsl:with-param name="section-name">PERSONAL INFORMATION</xsl:with-param>
+        </xsl:call-template>
+        <fo:table font-family="sans-serif" font-size="11pt">
+            <fo:table-column column-width="40mm"/>
+            <fo:table-column column-width="150mm"/>
+            <fo:table-body>
+                <xsl:call-template name="table-row">
+                    <xsl:with-param name="key">Date of birth:</xsl:with-param>
+                    <xsl:with-param name="value"><xsl:value-of select="birthday"/></xsl:with-param>
+                </xsl:call-template>
+                <xsl:call-template name="table-row">
+                    <xsl:with-param name="key">Marital status:</xsl:with-param>
+                    <xsl:with-param name="value"><xsl:value-of select="marital-status"/></xsl:with-param>
+                </xsl:call-template>
+                <xsl:call-template name="table-row">
+                    <xsl:with-param name="key">Languages:</xsl:with-param>
+                    <xsl:with-param name="value">
+                        <xsl:for-each select="languages/language">
+                            <xsl:value-of select="."/> (<xsl:value-of select="@type"/>)<xsl:if test="position() &lt; last()">, </xsl:if>
+                        </xsl:for-each>
+                    </xsl:with-param>
+                </xsl:call-template>
+            </fo:table-body>
+        </fo:table>
     </xsl:template>
     <xsl:template match="education">
         <xsl:call-template name="section">
@@ -204,6 +187,30 @@
                 </fo:list-item>
             </xsl:for-each>
         </fo:list-block>
+    </xsl:template>
+    <!-- Skills -->
+    <xsl:template match="skills">
+        <xsl:call-template name="section">
+            <xsl:with-param name="section-name">SKILLS</xsl:with-param>
+        </xsl:call-template>
+        <fo:table font-family="sans-serif" font-size="11pt">
+            <fo:table-column column-width="60mm"/>
+            <fo:table-column/>
+            <fo:table-body>
+                <xsl:for-each select="skill-set">
+                    <xsl:call-template name="table-row">
+                        <xsl:with-param name="key">
+                            <xsl:value-of select="skill-set-name"/>:
+                        </xsl:with-param>
+                        <xsl:with-param name="value">
+                            <xsl:for-each select="skill">
+                                <xsl:value-of select="."/><xsl:if test="position() &lt; last()">, </xsl:if>
+                            </xsl:for-each>.
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </fo:table-body>
+        </fo:table>
     </xsl:template>
     <!-- auxiliary templates -->
     <xsl:template name="section">

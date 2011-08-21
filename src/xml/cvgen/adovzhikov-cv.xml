@@ -55,4 +55,92 @@
         </summary-item>
         <summary-item>Mentor other members/juniors in the team</summary-item>
     </summary>
+    <skills>
+        <skill-set>
+            <skill-set-name>Programming languages</skill-set-name>
+            <skill>Java</skill>
+            <skill>C/C++</skill>
+            <skill>Python</skill>
+            <skill>Clojure</skill>
+            <skill>JavaScript</skill>
+            <skill>Perl</skill>
+            <skill>PHP</skill>
+        </skill-set>
+        <skill-set>
+            <skill-set-name>Technologies</skill-set-name>
+            <skill>Java</skill>
+            <skill>J2EE</skill>
+            <skill>EJB</skill>
+            <skill>JAXB</skill>
+            <skill>JDBC</skill>
+            <skill>JNDI</skill>
+            <skill>Swing</skill>
+            <skill>JSP</skill>
+            <skill>Servlet</skill>
+            <skill>XML</skill>
+            <skill>JUnit</skill>
+        </skill-set>
+        <skill-set>
+            <skill-set-name>Frameworks</skill-set-name>
+            <skill>Struts</skill>
+            <skill>Tiles</skill>
+            <skill>Spring</skill>
+            <skill>Hibernate</skill>
+            <skill>Qt</skill>
+        </skill-set>
+        <skill-set>
+            <skill-set-name>Web Technologies</skill-set-name>
+            <skill>JSP</skill>
+            <skill>HTML</skill>
+            <skill>XML</skill>
+            <skill>JavaScript</skill>
+            <skill>JSTL</skill>
+            <skill>CSS</skill>
+            <skill>Axis</skill>
+            <skill>SOAP</skill>
+        </skill-set>
+        <skill-set>
+            <skill-set-name>RDBMS</skill-set-name>
+            <skill>Oracle</skill>
+            <skill>MySQL</skill>
+            <skill>PostgreSQL</skill>
+            <skill>MS SQL</skill>
+            <skill>DB2</skill>
+        </skill-set>
+        <skill-set>
+            <skill-set-name>Application/Web Servers</skill-set-name>
+            <skill>Weblogic</skill>
+            <skill>Apache Tomcat</skill>
+            <skill>OC4J</skill>
+            <skill>JBoss</skill>
+            <skill>Apache HTTP</skill>
+            <skill>IIS</skill>
+        </skill-set>
+        <skill-set>
+            <skill-set-name>IDE</skill-set-name>
+            <skill>IDEA</skill>
+            <skill>NetBeans</skill>
+            <skill>Eclipse</skill>
+            <skill>JBuilder</skill>
+            <skill>PL/SQL Developer</skill>
+        </skill-set>
+        <skill-set>
+            <skill-set-name>Platforms</skill-set-name>
+            <skill>Linux Gentoo/Ubuntu/Fedora/Red Hat</skill>
+            <skill>Windows 95/98/2000/XP/Vista</skill>
+        </skill-set>
+        <skill-set>
+            <skill-set-name>Version Control</skill-set-name>
+            <skill>CVS</skill>
+            <skill>Subversion</skill>
+            <skill>Git</skill>
+            <skill>Perforce</skill>
+            <skill>ClearCase</skill>
+            <skill>StarTeam</skill>
+        </skill-set>
+        <skill-set>
+            <skill-set-name>Utilities/Tools</skill-set-name>
+            <skill>Apache Ant</skill>
+        </skill-set>
+    </skills>
 </cv-document>
