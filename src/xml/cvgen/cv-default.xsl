@@ -219,7 +219,7 @@
         <fo:block font-family="sans-serif"
                   font-size="12pt"
                   font-weight="bold"
-                  background-color="rgb(230,230,230)"
+                  background-color="rgb(210,210,210)"
                   margin-top="5pt"
                   margin-bottom="5pt"
                   padding-top="2pt"

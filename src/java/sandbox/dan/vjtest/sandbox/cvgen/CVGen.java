@@ -11,7 +11,7 @@ import java.io.File;
 public class CVGen {
     public static void main(String[] args) throws TransformerException {
         TransformerFactory factory = TransformerFactory.newInstance();
-        Source xslt = new StreamSource(new File("./src/xml/cvgen/transform.xml"));
+        Source xslt = new StreamSource(new File("./src/xml/cvgen/cv-default.xsl"));
         Transformer transformer = factory.newTransformer(xslt);
         
         Source text = new StreamSource(new File("./src/xml/cvgen/adovzhikov-cv.xml"));
