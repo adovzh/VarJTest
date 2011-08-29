@@ -143,4 +143,33 @@
             <skill>Apache Ant</skill>
         </skill-set>
     </skills>
+    <certifications>
+        <cert-provider name="Sun">
+            <cert date="2010-05-12">Sun Certified Developer for the Java Platform</cert>
+            <cert date="2008-06-27">Sun Certified Programmer for the Java Platform, Standard Edition 6</cert>
+        </cert-provider>
+        <cert-provider name="Angelika Langer">
+            <cert date="2010-07-05">High-Performance Java Course Certificate</cert>
+        </cert-provider>
+        <cert-provider name="Brainbench" verify-url="http://www.brainbench.com/transcript.jsp?pid=7441065">
+            <cert date="2010-09-19" level="Master's">C</cert>
+            <cert date="2008-02-25" expired="true">C++</cert>
+            <cert date="2008-12-06" level="Master's">Java 5</cert>
+            <cert date="2008-08-17" level="Master's">Java 2 Fundamentals</cert>
+            <cert date="2011-03-23" level="Master's">Java 2 - GUI</cert>
+            <cert date="2009-02-01" level="Master's">Java 2 - Non-GUI</cert>
+            <cert date="2009-04-09">Java 2 Platform, Enterprise Edition (J2EE)</cert>
+            <cert date="2009-04-16">SQL (ANSI)</cert>
+            <cert date="2008-09-28" level="Master's">RDBMS Concepts</cert>
+            <cert date="2008-10-18" level="Master's">Programming Concepts</cert>
+            <cert date="2008-11-03">Programming/Analyst Aptitude</cert>
+            <cert date="2008-12-01" level="Master's">OO Concepts</cert>
+            <cert date="2009-02-15">Java Server Pages (JSP 1.2)</cert>
+            <cert date="2008-02-27" expired="true">Listening Comprehension English (UK)</cert>
+            <cert date="2008-08-24">Written English</cert>
+            <cert date="2009-02-01">Listening Skills</cert>
+            <cert date="2009-07-26">Business Communication</cert>
+            <cert date="2009-09-03">Customer Requirements Analysis</cert>
+        </cert-provider>
+    </certifications>
 </cv-document>

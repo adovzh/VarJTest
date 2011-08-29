@@ -166,12 +166,14 @@
             <xsl:with-param name="value"><xsl:value-of select="."/></xsl:with-param>
         </xsl:call-template>
     </xsl:template>
+    <!-- Objective -->
     <xsl:template match="objective">
         <xsl:call-template name="section">
             <xsl:with-param name="section-name">OBJECTIVE</xsl:with-param>
         </xsl:call-template>
         <fo:block font-size="11pt"><xsl:value-of select="."/></fo:block>
     </xsl:template>
+    <!-- Summary -->
     <xsl:template match="summary">
         <xsl:call-template name="section">
             <xsl:with-param name="section-name">PROFESSIONAL SUMMARY</xsl:with-param>
@@ -212,6 +214,34 @@
                 </xsl:for-each>
             </fo:table-body>
         </fo:table>
+    </xsl:template>
+    <!-- Certifications -->
+    <xsl:template match="certifications">
+        <xsl:call-template name="section">
+            <xsl:with-param name="section-name">CERTIFICATIONS</xsl:with-param>
+        </xsl:call-template>
+        <xsl:for-each select="cert-provider">
+            <fo:block font-size="11pt" font-weight="bold">
+                <xsl:value-of select="@name"/>
+                <xsl:if test="@verify-url">
+                    (<fo:basic-link color="blue">
+                        <xsl:attribute name="text-decoration">
+                            <xsl:text>underline</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="external-destination">
+                            <xsl:value-of select="@verify-url"/>
+                        </xsl:attribute>verify</fo:basic-link>)</xsl:if>:
+            </fo:block>
+            <xsl:for-each select="cert">
+                <fo:block font-size="11pt">
+                    <xsl:value-of select="."/>
+                    <xsl:if test="@level"> (<xsl:value-of select="@level"/> Level)</xsl:if>
+                    on <xsl:value-of select="@date"/>
+                    <xsl:if test="@expired='true'"> (expired)</xsl:if>
+                </fo:block>
+            </xsl:for-each>
+            <fo:block margin-bottom="10pt"/>
+        </xsl:for-each>
     </xsl:template>
     <!-- auxiliary templates -->
     <xsl:template name="section">
