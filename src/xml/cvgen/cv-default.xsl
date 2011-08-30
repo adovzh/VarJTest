@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:fo="http://www.w3.org/1999/XSL/Format">
+                xmlns:fo="http://www.w3.org/1999/XSL/Format"
+                xmlns:cv="cv-schema.xsd">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:variable name="firstName" select="cv-document/personal/first-name"/>
-    <xsl:variable name="lastName" select="cv-document/personal/last-name"/>
+    <xsl:variable name="firstName" select="cv:document/cv:personal/cv:first-name"/>
+    <xsl:variable name="lastName" select="cv:document/cv:personal/cv:last-name"/>
     <xsl:variable name="applicantName" select="concat($firstName, ' ', $lastName)"/>
     <xsl:template match="/">
         <fo:root>
@@ -35,7 +36,7 @@
                                                               font-style="italic"
                                                               font-weight="bold"
                                                               text-align="center">
-                                                        <xsl:value-of select="cv-document/personal/address/street"/>
+                                                        <xsl:value-of select="cv:document/cv:personal/cv:address/cv:street"/>
                                                     </fo:block>
                                                 </fo:table-cell>
                                             </fo:table-row>
@@ -45,8 +46,8 @@
                                                               font-style="italic"
                                                               font-weight="bold"
                                                               text-align="center">
-                                                        <xsl:value-of select="cv-document/personal/address/city"/>,
-                                                        <xsl:value-of select="cv-document/personal/address/country"/>
+                                                        <xsl:value-of select="cv:document/cv:personal/cv:address/cv:city"/>,
+                                                        <xsl:value-of select="cv:document/cv:personal/cv:address/cv:country"/>
                                                     </fo:block>
                                                 </fo:table-cell>
                                             </fo:table-row>
@@ -56,7 +57,7 @@
                                                               font-style="italic"
                                                               font-weight="bold"
                                                               text-align="center">
-                                                        Phone: <xsl:value-of select="cv-document/personal/phone[@type='home']"/>
+                                                        Phone: <xsl:value-of select="cv:document/cv:personal/cv:phone[@cv:type='home']"/>
                                                     </fo:block>
                                                 </fo:table-cell>
                                             </fo:table-row>
@@ -66,7 +67,7 @@
                                                               font-style="italic"
                                                               font-weight="bold"
                                                               text-align="center">
-                                                        Phone: <xsl:value-of select="cv-document/personal/phone[@type='mobile']"/>
+                                                        Phone: <xsl:value-of select="cv:document/cv:personal/cv:phone[@cv:type='mobile']"/>
                                                     </fo:block>
                                                 </fo:table-cell>
                                             </fo:table-row>
@@ -76,7 +77,7 @@
                                                               font-style="italic"
                                                               font-weight="bold"
                                                               text-align="center">
-                                                        E-Mail: <xsl:value-of select="cv-document/personal/email"/>
+                                                        E-Mail: <xsl:value-of select="cv:document/cv:personal/cv:email"/>
                                                     </fo:block>
                                                 </fo:table-cell>
                                             </fo:table-row>
@@ -94,7 +95,7 @@
             </fo:page-sequence>
         </fo:root>
     </xsl:template>
-    <xsl:template match="personal">
+    <xsl:template match="cv:personal">
         <xsl:call-template name="section">
             <xsl:with-param name="section-name">PERSONAL INFORMATION</xsl:with-param>
         </xsl:call-template>
@@ -104,82 +105,82 @@
             <fo:table-body>
                 <xsl:call-template name="table-row">
                     <xsl:with-param name="key">Date of birth:</xsl:with-param>
-                    <xsl:with-param name="value"><xsl:value-of select="birthday"/></xsl:with-param>
+                    <xsl:with-param name="value"><xsl:value-of select="cv:birthday"/></xsl:with-param>
                 </xsl:call-template>
                 <xsl:call-template name="table-row">
                     <xsl:with-param name="key">Marital status:</xsl:with-param>
-                    <xsl:with-param name="value"><xsl:value-of select="marital-status"/></xsl:with-param>
+                    <xsl:with-param name="value"><xsl:value-of select="cv:marital-status"/></xsl:with-param>
                 </xsl:call-template>
                 <xsl:call-template name="table-row">
                     <xsl:with-param name="key">Languages:</xsl:with-param>
                     <xsl:with-param name="value">
-                        <xsl:for-each select="languages/language">
-                            <xsl:value-of select="."/> (<xsl:value-of select="@type"/>)<xsl:if test="position() &lt; last()">, </xsl:if>
+                        <xsl:for-each select="cv:languages/cv:language">
+                            <xsl:value-of select="."/> (<xsl:value-of select="@cv:type"/>)<xsl:if test="position() &lt; last()">, </xsl:if>
                         </xsl:for-each>
                     </xsl:with-param>
                 </xsl:call-template>
             </fo:table-body>
         </fo:table>
     </xsl:template>
-    <xsl:template match="education">
+    <xsl:template match="cv:education">
         <xsl:call-template name="section">
             <xsl:with-param name="section-name">EDUCATION</xsl:with-param>
         </xsl:call-template>
-        <xsl:apply-templates select="university"/>
+        <xsl:apply-templates select="cv:university"/>
     </xsl:template>
-    <xsl:template match="university">
+    <xsl:template match="cv:university">
         <fo:block font-family="sans-serif" font-size="11pt" font-weight="bold">
-            <xsl:value-of select="start-date"/>-<xsl:value-of select="end-date"/>, <xsl:value-of select="university-name"/>
+            <xsl:value-of select="cv:start-date"/>-<xsl:value-of select="cv:end-date"/>, <xsl:value-of select="cv:university-name"/>
         </fo:block>
         <fo:table font-family="sans-serif" font-size="11pt">
             <fo:table-column column-width="50mm"/>
             <fo:table-column column-width="100mm"/>
             <fo:table-body>
-                <xsl:apply-templates select="department"/>
-                <xsl:apply-templates select="specialty"/>
-                <xsl:apply-templates select="level"/>
-                <xsl:apply-templates select="thesis"/>
+                <xsl:apply-templates select="cv:department"/>
+                <xsl:apply-templates select="cv:specialty"/>
+                <xsl:apply-templates select="cv:level"/>
+                <xsl:apply-templates select="cv:thesis"/>
             </fo:table-body>
         </fo:table>
     </xsl:template>
-    <xsl:template match="department">
+    <xsl:template match="cv:department">
         <xsl:call-template name="table-row">
             <xsl:with-param name="key">Department:</xsl:with-param>
             <xsl:with-param name="value"><xsl:value-of select="."/></xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    <xsl:template match="specialty">
+    <xsl:template match="cv:specialty">
         <xsl:call-template name="table-row">
             <xsl:with-param name="key">Specialty/Course:</xsl:with-param>
             <xsl:with-param name="value"><xsl:value-of select="."/></xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    <xsl:template match="level">
+    <xsl:template match="cv:level">
         <xsl:call-template name="table-row">
             <xsl:with-param name="key">Gained Level:</xsl:with-param>
             <xsl:with-param name="value"><xsl:value-of select="."/></xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    <xsl:template match="thesis">
+    <xsl:template match="cv:thesis">
         <xsl:call-template name="table-row">
             <xsl:with-param name="key">Diploma Thesis:</xsl:with-param>
             <xsl:with-param name="value"><xsl:value-of select="."/></xsl:with-param>
         </xsl:call-template>
     </xsl:template>
     <!-- Objective -->
-    <xsl:template match="objective">
+    <xsl:template match="cv:objective">
         <xsl:call-template name="section">
             <xsl:with-param name="section-name">OBJECTIVE</xsl:with-param>
         </xsl:call-template>
         <fo:block font-size="11pt"><xsl:value-of select="."/></fo:block>
     </xsl:template>
     <!-- Summary -->
-    <xsl:template match="summary">
+    <xsl:template match="cv:summary">
         <xsl:call-template name="section">
             <xsl:with-param name="section-name">PROFESSIONAL SUMMARY</xsl:with-param>
         </xsl:call-template>
         <fo:list-block>
-            <xsl:for-each select="summary-item">
+            <xsl:for-each select="cv:summary-item">
                 <fo:list-item>
                     <fo:list-item-label end-indent="label-end()">
                         <fo:block font-size="9pt"><fo:inline font-family="Symbol">&#x2022;</fo:inline></fo:block>
@@ -192,7 +193,7 @@
         </fo:list-block>
     </xsl:template>
     <!-- Skills -->
-    <xsl:template match="skills">
+    <xsl:template match="cv:skills">
         <xsl:call-template name="section">
             <xsl:with-param name="section-name">SKILLS</xsl:with-param>
         </xsl:call-template>
@@ -200,13 +201,13 @@
             <fo:table-column column-width="60mm"/>
             <fo:table-column/>
             <fo:table-body>
-                <xsl:for-each select="skill-set">
+                <xsl:for-each select="cv:skill-set">
                     <xsl:call-template name="table-row">
                         <xsl:with-param name="key">
-                            <xsl:value-of select="skill-set-name"/>:
+                            <xsl:value-of select="cv:skill-set-name"/>:
                         </xsl:with-param>
                         <xsl:with-param name="value">
-                            <xsl:for-each select="skill">
+                            <xsl:for-each select="cv:skill">
                                 <xsl:value-of select="."/><xsl:if test="position() &lt; last()">, </xsl:if>
                             </xsl:for-each>.
                         </xsl:with-param>
@@ -216,64 +217,64 @@
         </fo:table>
     </xsl:template>
     <!-- Certifications -->
-    <xsl:template match="certifications">
+    <xsl:template match="cv:certifications">
         <xsl:call-template name="section">
             <xsl:with-param name="section-name">CERTIFICATIONS</xsl:with-param>
         </xsl:call-template>
-        <xsl:for-each select="cert-provider">
+        <xsl:for-each select="cv:cert-provider">
             <fo:block font-size="11pt" font-weight="bold">
-                <xsl:value-of select="@name"/>
-                <xsl:if test="@verify-url">
+                <xsl:value-of select="@cv:name"/>
+                <xsl:if test="@cv:verify-url">
                     (<fo:basic-link color="blue">
                         <xsl:attribute name="text-decoration">
                             <xsl:text>underline</xsl:text>
                         </xsl:attribute>
                         <xsl:attribute name="external-destination">
-                            <xsl:value-of select="@verify-url"/>
+                            <xsl:value-of select="@cv:verify-url"/>
                         </xsl:attribute>verify</fo:basic-link>)</xsl:if>:
             </fo:block>
-            <xsl:for-each select="cert">
+            <xsl:for-each select="cv:cert">
                 <fo:block font-size="11pt">
                     <xsl:value-of select="."/>
-                    <xsl:if test="@level"> (<xsl:value-of select="@level"/> Level)</xsl:if>
-                    on <xsl:value-of select="@date"/>
-                    <xsl:if test="@expired='true'"> (expired)</xsl:if>
+                    <xsl:if test="@cv:level"> (<xsl:value-of select="@cv:level"/> Level)</xsl:if>
+                    on <xsl:value-of select="@cv:date"/>
+                    <xsl:if test="@cv:expired='true'"> (expired)</xsl:if>
                 </fo:block>
             </xsl:for-each>
             <fo:block margin-bottom="10pt"/>
         </xsl:for-each>
     </xsl:template>
     <!-- Experience -->
-    <xsl:template match="experience">
+    <xsl:template match="cv:experience">
         <xsl:call-template name="section">
             <xsl:with-param name="section-name">PROFESSIONAL EXPERIENCE</xsl:with-param>
         </xsl:call-template>
-        <xsl:for-each select="company">
+        <xsl:for-each select="cv:company">
             <fo:block font-size="11pt">
-                <fo:inline font-weight="bold"><xsl:value-of select="company-name"/></fo:inline>
-                - <xsl:value-of select="company-location"/>
-                (<xsl:value-of select="start-date"/> -
+                <fo:inline font-weight="bold"><xsl:value-of select="cv:company-name"/></fo:inline>
+                - <xsl:value-of select="cv:company-location"/>
+                (<xsl:value-of select="cv:start-date"/> -
                 <xsl:choose>
-                    <xsl:when test="end-date"><xsl:value-of select="end-date"/></xsl:when>
+                    <xsl:when test="cv:end-date"><xsl:value-of select="cv:end-date"/></xsl:when>
                     <xsl:otherwise>now</xsl:otherwise>
                 </xsl:choose>)
             </fo:block>
-            <xsl:for-each select="project">
+            <xsl:for-each select="cv:project">
                 <fo:block font-size="11pt">
                     <fo:inline font-weight="bold">Project: </fo:inline>
-                    <xsl:value-of select="project-name"/>
+                    <xsl:value-of select="cv:project-name"/>
                 </fo:block>
                 <fo:block font-size="11pt">
                     <fo:inline font-weight="bold">Role: </fo:inline>
-                    <xsl:value-of select="role"/>
+                    <xsl:value-of select="cv:role"/>
                 </fo:block>
                 <fo:block font-size="11pt">
                     <fo:inline font-weight="bold">Description: </fo:inline>
-                    <xsl:value-of select="description"/>.
+                    <xsl:value-of select="cv:description"/>.
                 </fo:block>
                 <fo:block font-size="11pt" font-weight="bold">Responsibilities:</fo:block>
                 <fo:list-block>
-                    <xsl:for-each select="responsibilities/responsibility">
+                    <xsl:for-each select="cv:responsibilities/cv:responsibility">
                         <fo:list-item>
                             <fo:list-item-label end-indent="label-end()">
                                 <fo:block font-size="9pt"><fo:inline font-family="Symbol">&#x2022;</fo:inline></fo:block>
@@ -286,7 +287,7 @@
                 </fo:list-block>
                 <fo:block font-size="11pt">
                     <fo:inline font-weight="bold">Environment: </fo:inline>
-                    <xsl:for-each select="environment/env-entry">
+                    <xsl:for-each select="cv:environment/cv:env-entry">
                         <xsl:value-of select="."/><xsl:if test="position() &lt; last()">, </xsl:if>
                     </xsl:for-each>.
                 </fo:block>

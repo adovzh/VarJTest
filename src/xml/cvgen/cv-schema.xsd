@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="document">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="personal">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="first-name" type="xsd:string"/>
+                            <xsd:element name="last-name" type="xsd:string"/>
+                            <xsd:element name="address">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="country" type="xsd:string"/>
+                                        <xsd:element name="city" type="xsd:string"/>
+                                        <xsd:element name="street" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="phone">
+                                <xsd:complexType>
+                                    <xsd:simpleContent>
+                                        <xsd:extension base="xsd:string">
+                                            <xsd:attribute name="type" use="required">
+                                                <xsd:simpleType>
+                                                    <xsd:restriction base="xsd:string">
+                                                        <xsd:enumeration value="home"/>
+                                                        <xsd:enumeration value="mobile"/>
+                                                    </xsd:restriction>
+                                                </xsd:simpleType>
+                                            </xsd:attribute>
+                                        </xsd:extension>
+                                    </xsd:simpleContent>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="email">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:pattern value="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"/>
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="birthday" type="xsd:date"/>
+                            <xsd:element name="marital-status" type="xsd:string"/>
+                            <xsd:element name="languages">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="language" minOccurs="1">
+                                            <xsd:complexType>
+                                                <xsd:simpleContent>
+                                                    <xsd:extension base="xsd:string">
+                                                        <xsd:attribute name="type" type="xsd:string"/>
+                                                    </xsd:extension>
+                                                </xsd:simpleContent>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="education">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="university">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="university-name" type="xsd:string"/>
+                                        <xsd:element name="start-date" type="xsd:short"/>
+                                        <xsd:element name="end-date" type="xsd:short"/>
+                                        <xsd:element name="department" type="xsd:string"/>
+                                        <xsd:element name="specialty" type="xsd:string"/>
+                                        <xsd:element name="level" type="xsd:string"/>
+                                        <xsd:element name="thesis" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="objective" type="xsd:string"/>
+                <xsd:element name="summary">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="summary-item" minOccurs="1" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="skills">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="skill-set" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="skill-set-name" type="xsd:string"/>
+                                        <xsd:element name="skill" type="xsd:string" maxOccurs="unbounded"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="certifications">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="cert-provider" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="cert" maxOccurs="unbounded">
+                                            <xsd:complexType>
+                                                <xsd:simpleContent>
+                                                    <xsd:extension base="xsd:string">
+                                                        <xsd:attribute name="date" type="xsd:date" use="required"/>
+                                                        <xsd:attribute name="level" type="xsd:string"/>
+                                                        <xsd:attribute name="expired" type="xsd:boolean"/>
+                                                    </xsd:extension>
+                                                </xsd:simpleContent>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                    <xsd:attribute name="name" type="xsd:string" use="required"/>
+                                    <xsd:attribute name="verify-url" type="xsd:string"/>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="experience">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="company" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="company-name" type="xsd:string"/>
+                                        <xsd:element name="company-location" type="xsd:string"/>
+                                        <xsd:element name="start-date" type="xsd:string"/>
+                                        <xsd:element name="end-date" type="xsd:string"/>
+                                        <xsd:element name="project" maxOccurs="unbounded">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="project-name" type="xsd:string"/>
+                                                    <xsd:element name="role" type="xsd:string"/>
+                                                    <xsd:element name="description" type="xsd:string"/>
+                                                    <xsd:element name="responsibilities">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="responsibility" type="xsd:string" maxOccurs="unbounded"/>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                    <xsd:element name="environment">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="env-entry" type="xsd:string" maxOccurs="unbounded"/>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
