@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="https://github.com/adovzh/VarJTest/src/xml/cvgen/cv-schema.xsd">
+          xsi:noNamespaceSchemaLocation="cv-schema.xsd">
     <personal>
         <first-name>Alexander</first-name>
         <last-name>Dovzhikov</last-name>
@@ -460,6 +460,7 @@
             <end-date>Jul 2000</end-date>
             <project>
                 <project-name>Real</project-name>
+                <role>Software Developer</role>
                 <description>Proprietary CASE tool</description>
                 <responsibilities>
                     <responsibility>Involved in tools development for CASE Real</responsibility>

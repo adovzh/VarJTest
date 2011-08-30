@@ -17,7 +17,7 @@
                                     </xsd:sequence>
                                 </xsd:complexType>
                             </xsd:element>
-                            <xsd:element name="phone">
+                            <xsd:element name="phone" minOccurs="1" maxOccurs="2">
                                 <xsd:complexType>
                                     <xsd:simpleContent>
                                         <xsd:extension base="xsd:string">
@@ -45,7 +45,7 @@
                             <xsd:element name="languages">
                                 <xsd:complexType>
                                     <xsd:sequence>
-                                        <xsd:element name="language" minOccurs="1">
+                                        <xsd:element name="language" minOccurs="1" maxOccurs="unbounded">
                                             <xsd:complexType>
                                                 <xsd:simpleContent>
                                                     <xsd:extension base="xsd:string">
@@ -135,7 +135,7 @@
                                         <xsd:element name="company-name" type="xsd:string"/>
                                         <xsd:element name="company-location" type="xsd:string"/>
                                         <xsd:element name="start-date" type="xsd:string"/>
-                                        <xsd:element name="end-date" type="xsd:string"/>
+                                        <xsd:element name="end-date" type="xsd:string" minOccurs="0"/>
                                         <xsd:element name="project" maxOccurs="unbounded">
                                             <xsd:complexType>
                                                 <xsd:sequence>
