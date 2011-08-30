@@ -375,6 +375,100 @@
                     <env-entry>CVS</env-entry>
                 </environment>
             </project>
+            <project>
+                <project-name>BrandX</project-name>
+                <role>Java Developer</role>
+                <description>Enterprise web application for polygraphic activities</description>
+                <responsibilities>
+                    <responsibility>Involved in vertical development of the enterprise application</responsibility>
+                    <responsibility>Developed stored procedures using PL/SQL</responsibility>
+                    <responsibility>Used JDBC for data access</responsibility>
+                    <responsibility>Developed a small framework for BLOB/CLOB storage/retrieval with pluggable storers,
+                    either to database or to server filesystem</responsibility>
+                    <responsibility>Used Struts MVC for control flow</responsibility>
+                    <responsibility>Developed dynamic web pages using DXHTML, CSS and JavaScript</responsibility>
+                    <responsibility>Used Struts and JSTL tag libraries for data representation</responsibility>
+                </responsibilities>
+                <environment>
+                    <env-entry>Java</env-entry>
+                    <env-entry>PL/SQL</env-entry>
+                    <env-entry>JavaScript</env-entry>
+                    <env-entry>HTML</env-entry>
+                    <env-entry>Struts</env-entry>
+                    <env-entry>JSTL</env-entry>
+                    <env-entry>Oracle RDBMS</env-entry>
+                    <env-entry>OC4J</env-entry>
+                    <env-entry>IDEA</env-entry>
+                    <env-entry>CVS</env-entry>
+                </environment>
+            </project>
+            <project>
+                <project-name>BBDO Hub</project-name>
+                <role>Java Developer</role>
+                <description>Enterprise web application for advertisement making and storing activities</description>
+                <responsibilities>
+                    <responsibility>Involved in vertical development of the enterprise application</responsibility>
+                    <responsibility>Used JDBC for data access</responsibility>
+                    <responsibility>Used Struts MVC for control flow</responsibility>
+                    <responsibility>Developed dynamic web pages using DXHTML, CSS and JavaScript</responsibility>
+                    <responsibility>Used Struts and JSTL tag libraries for data representation</responsibility>
+                </responsibilities>
+                <environment>
+                    <env-entry>Java</env-entry>
+                    <env-entry>JavaScript</env-entry>
+                    <env-entry>HTML</env-entry>
+                    <env-entry>Struts</env-entry>
+                    <env-entry>JSTL</env-entry>
+                    <env-entry>Oracle RDBMS</env-entry>
+                    <env-entry>OC4J</env-entry>
+                    <env-entry>IDEA</env-entry>
+                    <env-entry>CVS</env-entry>
+                </environment>
+            </project>
+        </company>
+        <company>
+            <company-name>TogetherSoft Labs</company-name>
+            <company-location>Saint Petersburg, Russia</company-location>
+            <start-date>Jul 2000</start-date>
+            <end-date>Mar 2002</end-date>
+            <project>
+                <project-name>Together Control Center</project-name>
+                <role>Java Developer</role>
+                <description>Together: Model-Build-Deploy CASE tool / IDE</description>
+                <responsibilities>
+                    <responsibility>Involved in Together Core development</responsibility>
+                    <responsibility>Developed VB6 pluggable parser using recursive descent approach</responsibility>
+                    <responsibility>Developed lexical analyzer as a finite state machine</responsibility>
+                    <responsibility>Introduced 'Comment' entity to TogetherSoft API</responsibility>
+                    <responsibility>Used Design Patterns in development</responsibility>
+                    <responsibility>Used UML diagrams extensively</responsibility>
+                </responsibilities>
+                <environment>
+                    <env-entry>Java</env-entry>
+                    <env-entry>JBuilder</env-entry>
+                    <env-entry>Together Control Center</env-entry>
+                    <env-entry>UML</env-entry>
+                </environment>
+            </project>
+        </company>
+        <company>
+            <company-name>Lanit-Tercom</company-name>
+            <company-location>Saint Petersburg, Russia</company-location>
+            <start-date>Oct 1999</start-date>
+            <end-date>Jul 2000</end-date>
+            <project>
+                <project-name>Real</project-name>
+                <description>Proprietary CASE tool</description>
+                <responsibilities>
+                    <responsibility>Involved in tools development for CASE Real</responsibility>
+                    <responsibility>Developed object-oriented editor for visual objects editing</responsibility>
+                    <responsibility>Developed view generator for CASE Real</responsibility>
+                </responsibilities>
+                <environment>
+                    <env-entry>VB6</env-entry>
+                    <env-entry>Visual Studio</env-entry>
+                </environment>
+            </project>
         </company>
     </experience>
 </cv-document>
