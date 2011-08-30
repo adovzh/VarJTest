@@ -315,6 +315,66 @@
                     <env-entry>Perforce</env-entry>
                 </environment>
             </project>
+            <project>
+                <project-name>T-Mobile Retail Web Portal</project-name>
+                <role>Java Developer</role>
+                <description>Enterprise web-based application for customers' support</description>
+                <responsibilities>
+                    <responsibility>Involved in presentation layer development</responsibility>
+                    <responsibility>Used Struts MVC for control flow</responsibility>
+                    <responsibility>Developed dynamic web pages using DXHTML, CSS and JavaScript</responsibility>
+                    <responsibility>Used Struts tag libraries for data representation</responsibility>
+                    <responsibility>Used J2EE patterns in development</responsibility>
+                    <responsibility>Used StarTeam as version control</responsibility>
+                </responsibilities>
+                <environment>
+                    <env-entry>J2EE</env-entry>
+                    <env-entry>EJB</env-entry>
+                    <env-entry>Servlet</env-entry>
+                    <env-entry>JSP</env-entry>
+                    <env-entry>Struts</env-entry>
+                    <env-entry>Hibernate</env-entry>
+                    <env-entry>JSTL</env-entry>
+                    <env-entry>Weblogic</env-entry>
+                    <env-entry>DB2</env-entry>
+                    <env-entry>IDEA</env-entry>
+                    <env-entry>CVS</env-entry>
+                    <env-entry>StarTeam</env-entry>
+                </environment>
+            </project>
+        </company>
+        <company>
+            <company-name>DataArt</company-name>
+            <company-location>Saint Petersburg, Russia</company-location>
+            <start-date>Jul 2002</start-date>
+            <end-date>Oct 2004</end-date>
+            <project>
+                <project-name>Console</project-name>
+                <role>Java Developer</role>
+                <description>Enterprise web application for job tracking</description>
+                <responsibilities>
+                    <responsibility>Involved in vertical development of the enterprise application</responsibility>
+                    <responsibility>Involved in database schema design discussions</responsibility>
+                    <responsibility>Developed stored procedures using PL/SQL and data access layer using Java</responsibility>
+                    <responsibility>Used Struts MVC for control flow</responsibility>
+                    <responsibility>Developed dynamic web pages using DXHTML, CSS and JavaScript</responsibility>
+                    <responsibility>Used Struts and JSTL tag libraries for data representation</responsibility>
+                    <responsibility>Responsible for moving the application from OC4J to JBoss application server</responsibility>
+                </responsibilities>
+                <environment>
+                    <env-entry>Java</env-entry>
+                    <env-entry>PL/SQL</env-entry>
+                    <env-entry>JavaScript</env-entry>
+                    <env-entry>HTML</env-entry>
+                    <env-entry>Struts</env-entry>
+                    <env-entry>JSTL</env-entry>
+                    <env-entry>Oracle RDBMS</env-entry>
+                    <env-entry>OC4J</env-entry>
+                    <env-entry>JBoss</env-entry>
+                    <env-entry>IDEA</env-entry>
+                    <env-entry>CVS</env-entry>
+                </environment>
+            </project>
         </company>
     </experience>
 </cv-document>
