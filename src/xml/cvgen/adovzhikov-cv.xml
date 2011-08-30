@@ -172,4 +172,149 @@
             <cert date="2009-09-03">Customer Requirements Analysis</cert>
         </cert-provider>
     </certifications>
+    <experience>
+        <company>
+            <company-name>Devexperts</company-name>
+            <company-location>Saint Petersburg, Russia</company-location>
+            <start-date>Apr 2008</start-date>
+            <project>
+                <project-name>Thinkorswim</project-name>
+                <role>Senior Java Developer</role>
+                <description>Financial software with support for investment and brokerage companies
+                dealing in global futures, options, stock and FOREX trading</description>
+                <responsibilities>
+                    <responsibility>Involved in design and development of cutting edge brokerage software</responsibility>
+                    <responsibility>Distributed message-driven components development</responsibility>
+                    <responsibility>Widely used design patterns in software development</responsibility>
+                    <responsibility>Implemented predictive ticker input control and caching mechanism on the client side</responsibility>
+                    <responsibility>Developed caching mechanism on the server side using suffix arrays</responsibility>
+                    <responsibility>Reimplemented order entry panel in dockable and slidable way using advanced Swing programming</responsibility>
+                    <responsibility>Developed flexible grid control for user's comfortable components management
+                    as well as auxiliary control panels</responsibility>
+                    <responsibility>Developed non-standard visual components with custom look and feel</responsibility>
+                    <responsibility>Responsible for code review</responsibility>
+                </responsibilities>
+                <environment>
+                    <env-entry>Core Java</env-entry>
+                    <env-entry>J2EE</env-entry>
+                    <env-entry>Swing</env-entry>
+                    <env-entry>Oracle</env-entry>
+                    <env-entry>EJB</env-entry>
+                    <env-entry>Spring</env-entry>
+                    <env-entry>Quote Distribution System (QDS)</env-entry>
+                    <env-entry>IDEA</env-entry>
+                    <env-entry>Subversion</env-entry>
+                </environment>
+            </project>
+        </company>
+        <company>
+            <company-name>Embria</company-name>
+            <company-location>Saint Petersburg, Russia</company-location>
+            <start-date>Oct 2007</start-date>
+            <end-date>Mar 2008</end-date>
+            <project>
+                <project-name>Web statistics analysis system</project-name>
+                <role>Senior Software Developer</role>
+                <description>Web statistics storage and analysis web application</description>
+                <responsibilities>
+                    <responsibility>Involved in requirements gathering, analysis, design and development of the system</responsibility>
+                    <responsibility>Designed database schema using MySQL 5 RDBMS as well as data access components layer</responsibility>
+                    <responsibility>Developed data analysis toolkit for data storage and analysis using MySQL Stored
+                    Procedures and PHP</responsibility>
+                    <responsibility>Involved in business and presentation layer development</responsibility>
+                </responsibilities>
+                <environment>
+                    <env-entry>PHP</env-entry>
+                    <env-entry>Zend Framework</env-entry>
+                    <env-entry>MySQL Stored Procedures</env-entry>
+                    <env-entry>Subversion</env-entry>
+                </environment>
+            </project>
+        </company>
+        <company>
+            <company-name>Luxoft</company-name>
+            <company-location>Saint Petersburg, Russia</company-location>
+            <start-date>Feb 2007</start-date>
+            <end-date>Sep 2007</end-date>
+            <project>
+                <project-name>Open Media Content Manager and Distribution Manager</project-name>
+                <role>Senior Java/PL/SQL Developer</role>
+                <description>One of the key components of Alcatel's Open Media Suite</description>
+                <responsibilities>
+                    <responsibility>Involved in development and maintenance of media content manager</responsibility>
+                    <responsibility>Developed Oracle stored procedures for advanced binary data and its metadata manipulation</responsibility>
+                    <responsibility>Developed numerous GUI enhancements as well as helper components for GUI-RDBMS communication</responsibility>
+                </responsibilities>
+                <environment>
+                    <env-entry>Java</env-entry>
+                    <env-entry>Swing</env-entry>
+                    <env-entry>PL/SQL</env-entry>
+                    <env-entry>Oracle</env-entry>
+                    <env-entry>IDEA</env-entry>
+                    <env-entry>Eclipse</env-entry>
+                    <env-entry>ClearCase</env-entry>
+                </environment>
+            </project>
+        </company>
+        <company>
+            <company-name>StarSoft Development Labs</company-name>
+            <company-location>Saint Petersburg, Russia</company-location>
+            <start-date>Oct 2004</start-date>
+            <end-date>Jan 2007</end-date>
+            <project>
+                <project-name>Jamba Clips</project-name>
+                <role>Senior Java Developer</role>
+                <description>Entertainment system for community media files uploading and browsing</description>
+                <responsibilities>
+                    <responsibility>Involved in requirements gathering, analysis, design and development
+                        of the entire 3-tiered enterprise application</responsibility>
+                    <responsibility>Designed database schema using Oracle RDBMS</responsibility>
+                    <responsibility>Developed data access and business layers of the application using Hibernate and Spring Framework</responsibility>
+                    <responsibility>Integrated the system with third-party components using Spring's Inversion of Control concept</responsibility>
+                    <responsibility>Developed build scripts using Apache Ant and provided a convenient way of application configuration</responsibility>
+                    <responsibility>Mentored junior developers in presentation layer implementation</responsibility>
+                    <responsibility>Used agile practices in development process</responsibility>
+                    <responsibility>Communicated with the customer during all development cycle,
+                        from the requirements gathering stage to delivery and maintenance stage</responsibility>
+                    <responsibility>Installed the application on the customer's side and communicated
+                        with third-party components provider representatives</responsibility>
+                </responsibilities>
+                <environment>
+                    <env-entry>J2EE</env-entry>
+                    <env-entry>Spring Framework</env-entry>
+                    <env-entry>Hibernate</env-entry>
+                    <env-entry>Servlet</env-entry>
+                    <env-entry>JSP</env-entry>
+                    <env-entry>Weblogic</env-entry>
+                    <env-entry>Oracle</env-entry>
+                    <env-entry>Tomcat</env-entry>
+                    <env-entry>IDEA</env-entry>
+                    <env-entry>Perforce</env-entry>
+                </environment>
+            </project>
+            <project>
+                <project-name>LABKA II</project-name>
+                <role>Senior Java Developer</role>
+                <description>Complex client/server system for managing medical activities</description>
+                <responsibilities>
+                    <responsibility>Involved in business logic and code analysis, development and code review</responsibility>
+                    <responsibility>Developed several GUI and Web UI features</responsibility>
+                    <responsibility>Use BMP enterprise beans for data access</responsibility>
+                    <responsibility>Performed system-wide refactorings to improve code understandability</responsibility>
+                    <responsibility>Performed code reviews to ensure code stability</responsibility>
+                    <responsibility>Wrote technical documentation for developed features</responsibility>
+                </responsibilities>
+                <environment>
+                    <env-entry>J2EE</env-entry>
+                    <env-entry>EJB</env-entry>
+                    <env-entry>Servlet</env-entry>
+                    <env-entry>JSP</env-entry>
+                    <env-entry>Oracle</env-entry>
+                    <env-entry>Weblogic</env-entry>
+                    <env-entry>IDEA</env-entry>
+                    <env-entry>Perforce</env-entry>
+                </environment>
+            </project>
+        </company>
+    </experience>
 </cv-document>

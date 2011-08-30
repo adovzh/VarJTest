@@ -243,6 +243,57 @@
             <fo:block margin-bottom="10pt"/>
         </xsl:for-each>
     </xsl:template>
+    <!-- Experience -->
+    <xsl:template match="experience">
+        <xsl:call-template name="section">
+            <xsl:with-param name="section-name">PROFESSIONAL EXPERIENCE</xsl:with-param>
+        </xsl:call-template>
+        <xsl:for-each select="company">
+            <fo:block font-size="11pt">
+                <fo:inline font-weight="bold"><xsl:value-of select="company-name"/></fo:inline>
+                - <xsl:value-of select="company-location"/>
+                (<xsl:value-of select="start-date"/> -
+                <xsl:choose>
+                    <xsl:when test="end-date"><xsl:value-of select="end-date"/></xsl:when>
+                    <xsl:otherwise>now</xsl:otherwise>
+                </xsl:choose>)
+            </fo:block>
+            <xsl:for-each select="project">
+                <fo:block font-size="11pt">
+                    <fo:inline font-weight="bold">Project: </fo:inline>
+                    <xsl:value-of select="project-name"/>
+                </fo:block>
+                <fo:block font-size="11pt">
+                    <fo:inline font-weight="bold">Role: </fo:inline>
+                    <xsl:value-of select="role"/>
+                </fo:block>
+                <fo:block font-size="11pt">
+                    <fo:inline font-weight="bold">Description: </fo:inline>
+                    <xsl:value-of select="description"/>.
+                </fo:block>
+                <fo:block font-size="11pt" font-weight="bold">Responsibilities:</fo:block>
+                <fo:list-block>
+                    <xsl:for-each select="responsibilities/responsibility">
+                        <fo:list-item>
+                            <fo:list-item-label end-indent="label-end()">
+                                <fo:block font-size="9pt"><fo:inline font-family="Symbol">&#x2022;</fo:inline></fo:block>
+                            </fo:list-item-label>
+                            <fo:list-item-body start-indent="body-start()">
+                                <fo:block font-size="11pt"><xsl:value-of select="."/>.</fo:block>
+                            </fo:list-item-body>
+                        </fo:list-item>
+                    </xsl:for-each>
+                </fo:list-block>
+                <fo:block font-size="11pt">
+                    <fo:inline font-weight="bold">Environment: </fo:inline>
+                    <xsl:for-each select="environment/env-entry">
+                        <xsl:value-of select="."/><xsl:if test="position() &lt; last()">, </xsl:if>
+                    </xsl:for-each>.
+                </fo:block>
+                <fo:block margin-bottom="10pt"/>
+            </xsl:for-each>
+        </xsl:for-each>
+    </xsl:template>
     <!-- auxiliary templates -->
     <xsl:template name="section">
         <xsl:param name="section-name"/>
