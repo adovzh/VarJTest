@@ -13,9 +13,15 @@
         <fo:root>
             <fo:layout-master-set>
                 <fo:simple-page-master master-name="A4-portrait"
-                                       page-height="29.7cm" page-width="21.0cm" margin="2cm">
-                    <fo:region-body margin-top="2.5cm"/>
+                                       page-height="29.7cm"
+                                       page-width="21.0cm"
+                                       margin-top="2cm"
+                                       margin-bottom="1cm"
+                                       margin-left="2cm"
+                                       margin-right="2cm">
+                    <fo:region-body margin-top="2.5cm" margin-bottom="1cm"/>
                     <fo:region-before extent="2.5cm"/>
+                    <fo:region-after extent="0.5cm"/>
                 </fo:simple-page-master>
             </fo:layout-master-set>
             <fo:page-sequence master-reference="A4-portrait">
@@ -90,6 +96,10 @@
                         </fo:table-body>
                     </fo:table>
                 </fo:static-content>
+                <!-- footer -->
+                <fo:static-content flow-name="xsl-region-after">
+                    <fo:block font-size="8pt" >Generated with Apache FOP</fo:block>
+                </fo:static-content>
                 <!-- main part -->
                 <fo:flow flow-name="xsl-region-body">
                     <xsl:apply-templates/>
@@ -135,7 +145,7 @@
             <xsl:value-of select="start-date"/>-<xsl:value-of select="end-date"/>, <xsl:value-of select="university-name"/>
         </fo:block>
         <fo:table font-family="sans-serif" font-size="11pt">
-            <fo:table-column column-width="50mm"/>
+            <fo:table-column column-width="40mm"/>
             <fo:table-column column-width="100mm"/>
             <fo:table-body>
                 <xsl:apply-templates select="department"/>
