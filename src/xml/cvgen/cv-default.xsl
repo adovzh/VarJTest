@@ -52,6 +52,37 @@
                     <fo:region-after extent="0.8cm"/>
                 </fo:simple-page-master>
             </fo:layout-master-set>
+            <fo:bookmark-tree>
+                <fo:bookmark internal-destination="personal-info">
+                    <fo:bookmark-title>Personal Information</fo:bookmark-title>
+                </fo:bookmark>
+                <fo:bookmark internal-destination="education">
+                    <fo:bookmark-title>Education</fo:bookmark-title>
+                </fo:bookmark>
+                <fo:bookmark internal-destination="objective">
+                    <fo:bookmark-title>Objective</fo:bookmark-title>
+                </fo:bookmark>
+                <fo:bookmark internal-destination="summary">
+                    <fo:bookmark-title>Professional Summary</fo:bookmark-title>
+                </fo:bookmark>
+                <fo:bookmark internal-destination="skills">
+                    <fo:bookmark-title>Skills</fo:bookmark-title>
+                </fo:bookmark>
+                <fo:bookmark internal-destination="certifications">
+                    <fo:bookmark-title>Certifications</fo:bookmark-title>
+                </fo:bookmark>
+                <fo:bookmark internal-destination="experience">
+                    <fo:bookmark-title>Professional Experience</fo:bookmark-title>
+                    <xsl:for-each select="document/experience/company">
+                        <fo:bookmark>
+                            <xsl:attribute name="internal-destination">
+                                <xsl:value-of select="company-name"/>
+                            </xsl:attribute>
+                            <fo:bookmark-title><xsl:value-of select="company-name"/></fo:bookmark-title>
+                        </fo:bookmark>
+                    </xsl:for-each>
+                </fo:bookmark>
+            </fo:bookmark-tree>
             <fo:page-sequence master-reference="A4-portrait">
                 <!-- header -->
                 <fo:static-content flow-name="xsl-region-before">
@@ -142,6 +173,7 @@
     </xsl:template>
     <xsl:template match="personal">
         <xsl:call-template name="section">
+            <xsl:with-param name="section-id">personal-info</xsl:with-param>
             <xsl:with-param name="section-name">PERSONAL INFORMATION</xsl:with-param>
         </xsl:call-template>
         <fo:table font-family="sans-serif" font-size="11pt">
@@ -169,6 +201,7 @@
     </xsl:template>
     <xsl:template match="education">
         <xsl:call-template name="section">
+            <xsl:with-param name="section-id">education</xsl:with-param>
             <xsl:with-param name="section-name">EDUCATION</xsl:with-param>
         </xsl:call-template>
         <xsl:apply-templates select="university"/>
@@ -215,6 +248,7 @@
     <!-- Objective -->
     <xsl:template match="objective">
         <xsl:call-template name="section">
+            <xsl:with-param name="section-id">objective</xsl:with-param>
             <xsl:with-param name="section-name">OBJECTIVE</xsl:with-param>
         </xsl:call-template>
         <fo:block font-size="11pt"><xsl:value-of select="."/></fo:block>
@@ -222,6 +256,7 @@
     <!-- Summary -->
     <xsl:template match="summary">
         <xsl:call-template name="section">
+            <xsl:with-param name="section-id">summary</xsl:with-param>
             <xsl:with-param name="section-name">PROFESSIONAL SUMMARY</xsl:with-param>
         </xsl:call-template>
         <fo:list-block>
@@ -240,6 +275,7 @@
     <!-- Skills -->
     <xsl:template match="skills">
         <xsl:call-template name="section">
+            <xsl:with-param name="section-id">skills</xsl:with-param>
             <xsl:with-param name="section-name">SKILLS</xsl:with-param>
         </xsl:call-template>
         <fo:table font-family="sans-serif" font-size="11pt">
@@ -264,6 +300,7 @@
     <!-- Certifications -->
     <xsl:template match="certifications">
         <xsl:call-template name="section">
+            <xsl:with-param name="section-id">certifications</xsl:with-param>
             <xsl:with-param name="section-name">CERTIFICATIONS</xsl:with-param>
         </xsl:call-template>
         <xsl:for-each select="cert-provider">
@@ -292,10 +329,14 @@
     <!-- Experience -->
     <xsl:template match="experience">
         <xsl:call-template name="section">
+            <xsl:with-param name="section-id">experience</xsl:with-param>
             <xsl:with-param name="section-name">PROFESSIONAL EXPERIENCE</xsl:with-param>
         </xsl:call-template>
         <xsl:for-each select="company">
             <fo:block font-size="11pt">
+                <xsl:attribute name="id">
+                    <xsl:value-of select="company-name"/>
+                </xsl:attribute>
                 <fo:inline font-weight="bold"><xsl:value-of select="company-name"/></fo:inline>
                 - <xsl:value-of select="company-location"/>
                 (<xsl:value-of select="start-date"/> -
@@ -342,6 +383,7 @@
     </xsl:template>
     <!-- auxiliary templates -->
     <xsl:template name="section">
+        <xsl:param name="section-id"/>
         <xsl:param name="section-name"/>
         <fo:block font-family="sans-serif"
                   font-size="12pt"
@@ -351,6 +393,9 @@
                   margin-bottom="5pt"
                   padding-top="2pt"
                   padding-start="2pt">
+            <xsl:attribute name="id">
+                <xsl:value-of select="$section-id"/>
+            </xsl:attribute>
             <xsl:value-of select="$section-name"/>
         </fo:block>
     </xsl:template>
