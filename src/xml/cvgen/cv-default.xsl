@@ -70,6 +70,14 @@
                 </fo:bookmark>
                 <fo:bookmark internal-destination="certifications">
                     <fo:bookmark-title>Certifications</fo:bookmark-title>
+                    <xsl:for-each select="document/certifications/cert-provider">
+                        <fo:bookmark>
+                            <xsl:attribute name="internal-destination">
+                                <xsl:value-of select="concat('cert-', @name)"/>
+                            </xsl:attribute>
+                            <fo:bookmark-title><xsl:value-of select="@name"/></fo:bookmark-title>
+                        </fo:bookmark>
+                    </xsl:for-each>
                 </fo:bookmark>
                 <fo:bookmark internal-destination="experience">
                     <fo:bookmark-title>Professional Experience</fo:bookmark-title>
@@ -305,6 +313,9 @@
         </xsl:call-template>
         <xsl:for-each select="cert-provider">
             <fo:block font-size="11pt" font-weight="bold">
+                <xsl:attribute name="id">
+                    <xsl:value-of select="concat('cert-', @name)"/>
+                </xsl:attribute>
                 <xsl:value-of select="@name"/>
                 <xsl:if test="@verify-url">
                     (<fo:basic-link color="blue">

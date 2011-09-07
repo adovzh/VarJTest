@@ -171,6 +171,7 @@
         <skill-set>
             <skill-set-name>Utilities/Tools</skill-set-name>
             <skill>Apache Ant</skill>
+            <skill>Apache FOP</skill>
         </skill-set>
     </skills>
     <certifications>
