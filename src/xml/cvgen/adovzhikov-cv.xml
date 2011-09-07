@@ -90,24 +90,19 @@
             <skill-set-name>Programming languages</skill-set-name>
             <skill>Java</skill>
             <skill>C/C++</skill>
-            <skill>Python</skill>
             <skill>Clojure</skill>
+            <skill>Python</skill>
             <skill>JavaScript</skill>
             <skill>Perl</skill>
             <skill>PHP</skill>
         </skill-set>
         <skill-set>
             <skill-set-name>Technologies</skill-set-name>
-            <skill>Java</skill>
+            <skill>Core Java</skill>
             <skill>J2EE</skill>
-            <skill>EJB</skill>
-            <skill>JAXB</skill>
-            <skill>JDBC</skill>
-            <skill>JNDI</skill>
             <skill>Swing</skill>
-            <skill>JSP</skill>
-            <skill>Servlet</skill>
-            <skill>XML</skill>
+            <skill>JDBC</skill>
+            <skill>XML/XSL</skill>
             <skill>JUnit</skill>
         </skill-set>
         <skill-set>
@@ -116,7 +111,6 @@
             <skill>Tiles</skill>
             <skill>Spring</skill>
             <skill>Hibernate</skill>
-            <skill>Qt</skill>
         </skill-set>
         <skill-set>
             <skill-set-name>Web Technologies</skill-set-name>
