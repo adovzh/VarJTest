@@ -3152,10 +3152,14 @@
   </element>
   <element name="bookmark-title">
     <complexType>
-      <attributeGroup ref="fo:Accessibility_Properties_List"/>
-      <attribute name="color" type="fo:color_Type"/>
-      <attribute name="font-style" type="fo:font-style-limited_Type"/>
-      <attribute name="font-weught" type="fo:font-weight-limited_Type"/>
+      <simpleContent>
+          <extension base="xs:string">
+              <attributeGroup ref="fo:Accessibility_Properties_List"/>
+              <attribute name="color" type="fo:color_Type"/>
+              <attribute name="font-style" type="fo:font-style-limited_Type"/>
+              <attribute name="font-weught" type="fo:font-weight-limited_Type"/>
+          </extension>
+      </simpleContent>
     </complexType>
   </element>
   <element name = "page-sequence-master">
