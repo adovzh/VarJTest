@@ -211,11 +211,10 @@
                     <responsibility>Involved in design and development of cutting edge brokerage software</responsibility>
                     <responsibility>Distributed message-driven components development</responsibility>
                     <responsibility>Widely used design patterns in software development</responsibility>
+                    <responsibility>Market risk indicators calculation and distribution</responsibility>
                     <responsibility>Implemented predictive ticker input control and caching mechanism on the client side</responsibility>
                     <responsibility>Developed caching mechanism on the server side using suffix arrays</responsibility>
                     <responsibility>Reimplemented order entry panel in dockable and slidable way using advanced Swing programming</responsibility>
-                    <responsibility>Developed flexible grid control for user's comfortable components management
-                    as well as auxiliary control panels</responsibility>
                     <responsibility>Developed non-standard visual components with custom look and feel</responsibility>
                     <responsibility>Responsible for code review</responsibility>
                 </responsibilities>
