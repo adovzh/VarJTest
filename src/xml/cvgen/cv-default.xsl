@@ -35,6 +35,7 @@
     <xsl:variable name="firstName" select="document/personal/first-name"/>
     <xsl:variable name="lastName" select="document/personal/last-name"/>
     <xsl:variable name="applicantName" select="concat($firstName, ' ', $lastName)"/>
+    <xsl:variable name="apos">'</xsl:variable>
     <xsl:template match="/">
         <fo:root>
             <fo:layout-master-set>
@@ -50,6 +51,29 @@
                     <fo:region-after extent="0.8cm"/>
                 </fo:simple-page-master>
             </fo:layout-master-set>
+            <fo:declarations>
+                <x:xmpmeta xmlns:x="adobe:ns:meta/">
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                        <rdf:Description rdf:about=""
+                                         xmlns:dc="http://purl.org/dc/elements/1.1/">
+                            <!-- Dublin Core properties go here -->
+                            <dc:title><xsl:value-of select="concat($applicantName, $apos, 's CV')"/></dc:title>
+                            <dc:creator><xsl:value-of select="$applicantName"/></dc:creator>
+                            <dc:description><xsl:value-of select="concat($applicantName, $apos, 's CV')"/></dc:description>
+                        </rdf:Description>
+                        <rdf:Description rdf:about=""
+                                         xmlns:xmp="http://ns.adobe.com/xap/1.0/">
+                            <!-- XMP properties go here -->
+                            <xmp:CreatorTool>Apache FOP</xmp:CreatorTool>
+                          </rdf:Description>
+                        <rdf:Description rdf:about=""
+                                         xmlns:pdf="http://ns.adobe.com/pdf/1.3/">
+                            <!-- PDF properties go here -->
+                            <pdf:Keywords>Java,Senior,Developer,Dovzhikov,Alexander</pdf:Keywords>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </x:xmpmeta>
+            </fo:declarations>
             <fo:bookmark-tree>
                 <fo:bookmark internal-destination="personal-info">
                     <fo:bookmark-title>Personal Information</fo:bookmark-title>

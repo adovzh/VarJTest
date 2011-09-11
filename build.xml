@@ -20,6 +20,8 @@
     <property name="build.test.sandbox" value="${build.test}/sandbox"/>
     <property name="build.test.reports" value="${build}/reports"/>
 
+    <property file="build.properties"/>
+
     <property name="lib" value="lib"/>
 
     <path id="classpath.test">
@@ -58,6 +60,10 @@
         <property name="build.cvgen" value="${build}/cvgen"/>
         <property name="src.cvgen" value="${src}/xml/cvgen"/>
         <property name="lib.fop" value="${lib}/fop"/>
+        <property name="cvgen.filename.external" value="Alexander Dovzhikov's CV"/>
+        <property name="dropbox.dir" value="${dropbox.home}/Resume/CVGen"/>
+        <!-- define conditional properties -->
+        <available file="${dropbox.dir}" type="dir" property="dropbox.dir.present"/>
         <!-- define fop task -->
         <taskdef name="fop" classname="org.apache.fop.tools.anttasks.Fop">
             <classpath>
@@ -150,13 +156,21 @@
         <fail if="junit.failure" message="Unit tests failed."/>
     </target>
 
+    <target name="cvgen.copy.dropbox" if="dropbox.dir.present">
+        <copy file="${build}/${cvgen.filename.external}.pdf"
+              todir="${dropbox.dir}"/>
+    </target>
+
     <target name="cvgen" depends="init.cvgen">
+        <!--
         <xslt in="${src.cvgen}/adovzhikov-cv.xml"
                 style="${src.cvgen}/cv-default.xsl"
-                out="${build.cvgen}/adovzhikov-cv.fo"/>
+                out="${build.cvgen}/adovzhikov-cv.fo"/> -->
         <fop format="application/pdf"
-             fofile="${build.cvgen}/adovzhikov-cv.fo"
-             outfile="${build}/Alexander Dovzhikov's CV.pdf"/>
+             xmlfile="${src.cvgen}/adovzhikov-cv.xml"
+             xsltfile="${src.cvgen}/cv-default.xsl"
+             outfile="${build}/${cvgen.filename.external}.pdf"/>
+        <antcall target="cvgen.copy.dropbox"/>
     </target>
 
     <target name="all" depends="easyanno.runtests,sandbox.runtests"/>

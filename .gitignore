@@ -4,3 +4,4 @@
 *.jar
 lib
 build
+build.properties
