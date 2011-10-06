@@ -107,10 +107,10 @@
         </skill-set>
         <skill-set>
             <skill-set-name>Frameworks</skill-set-name>
-            <skill>Struts</skill>
-            <skill>Tiles</skill>
             <skill>Spring</skill>
             <skill>Hibernate</skill>
+            <skill>Struts</skill>
+            <skill>Tiles</skill>
         </skill-set>
         <skill-set>
             <skill-set-name>Web Technologies</skill-set-name>
@@ -210,8 +210,8 @@
                 <responsibilities>
                     <responsibility>Involved in design and development of cutting edge brokerage software</responsibility>
                     <responsibility>Distributed message-driven components development</responsibility>
-                    <responsibility>Widely used design patterns in software development</responsibility>
                     <responsibility>Market risk indicators calculation and distribution</responsibility>
+                    <responsibility>Widely used design patterns in software development</responsibility>
                     <responsibility>Implemented predictive ticker input control and caching mechanism on the client side</responsibility>
                     <responsibility>Developed caching mechanism on the server side using suffix arrays</responsibility>
                     <responsibility>Reimplemented order entry panel in dockable and slidable way using advanced Swing programming</responsibility>
