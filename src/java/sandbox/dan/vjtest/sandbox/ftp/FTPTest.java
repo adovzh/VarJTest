@@ -39,9 +39,7 @@ public class FTPTest {
             }
         });
 
-        FTPClientConfig config = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
-        config.setServerLanguageCode("ru");
-        ftp.configure(config);
+        ftp.setControlEncoding("UTF-8");
 
         try {
             int reply;
@@ -84,7 +82,7 @@ public class FTPTest {
 
             ftp.enterLocalPassiveMode();
 
-            boolean result = ftp.changeWorkingDirectory("public");
+            boolean result = ftp.changeWorkingDirectory("music");
             System.out.println("Result: " + result);
 
             FTPFile[] ftpFiles = ftp.listFiles();
