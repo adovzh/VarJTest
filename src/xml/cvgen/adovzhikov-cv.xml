@@ -58,12 +58,11 @@
             <thesis>Online Training Development System</thesis>
         </university>
     </education>
-    <objective>Senior Java Developer / Technical Lead position in Financial Services area.</objective>
+    <objective>Senior Java Developer / Technical Lead position.</objective>
     <summary>
         <summary-item>Over 10 years of experience in software development</summary-item>
         <summary-item>Strong analytical skills and experience in Object Oriented concepts and programming techniques</summary-item>
         <summary-item>Strong mathematical background</summary-item>
-        <summary-item>Experience in Derivatives Trading Systems development</summary-item>
         <summary-item>
             Extensive development experience in Java, J2EE, JSP, Servlet, EJB, JDBC, Struts,
             Spring Framework, Hibernate, XML, HTML, JavaScript for n-tier architecture
@@ -77,6 +76,7 @@
             Containers for J2EE (OC4J)
         </summary-item>
         <summary-item>Experience in Web services technologies like Apache Axis, SOAP, WSDL</summary-item>
+        <summary-item>Experience in Derivatives Trading Systems development</summary-item>
         <summary-item>More than 5 years of experience working on Linux platform and shell scripting</summary-item>
         <summary-item>
             Hands-on experience leading all stages of system development efforts, including requirements
