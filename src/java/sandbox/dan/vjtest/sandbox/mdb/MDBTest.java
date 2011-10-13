@@ -35,12 +35,17 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Alexander Dovzhikov
  */
 public class MDBTest {
     private static final Logger log = LoggerFactory.getLogger(MDBTest.class);
+
+    private static final Pattern ALBUM_PATTERN = Pattern.compile("(\\d{4})\\s+(.*)");
 
     private final File path;
 
@@ -64,16 +69,71 @@ public class MDBTest {
             log.warn("Unexpected file: {}", f);
         }
 
+        int tempCounter = 0;
+
         for (File dir : dirs) {
-            checkArtistDir(dir);
+//            if (tempCounter++ > 0)
+//                return;
+
+            processArtist(dir);
         }
     }
 
-    private void checkArtistDir(File dir) {
-        log.info("Checking directory: {}", dir);
+    private void processArtist(File dir) {
+        log.info("Processing directory: {}", dir);
 
         String artist = dir.getName();
-        log.debug("Artist: {}", artist);
+
+        if (isSpecialArtistDir(artist)) {
+            log.debug("Skipping special dir: {}", artist);
+        } else {
+            log.debug("Artist: {}", artist);
+
+            int tempCounter = 0;
+
+            for (File f : dir.listFiles()) {
+//                if (tempCounter++ > 0)
+//                    return;
+
+                processAlbumDir(f, artist);
+            }
+        }
+
+    }
+
+    private void processAlbumDir(File albumDir, String artist) {
+        // album name must match %year %title
+        String albumDirName = albumDir.getName();
+        log.debug("Trying to check album '{}'", albumDirName);
+
+        Matcher matcher = ALBUM_PATTERN.matcher(albumDirName);
+
+        if (matcher.matches()) {
+            MatchResult matchResult = matcher.toMatchResult();
+            int groupCount = matchResult.groupCount();
+            log.trace("group count: {}", groupCount);
+
+            if (groupCount == 2) {
+                String yearText = matchResult.group(1);
+                String title = matchResult.group(2);
+
+                try {
+                    int year = Integer.parseInt(yearText);
+
+                    log.debug("Year: {}, title: '{}'", year, title);
+                } catch (NumberFormatException e) {
+                    log.error("Incorrect album year: {}", yearText);
+                }
+            } else {
+                log.error("Invalid group count: {}", groupCount);
+            }
+        } else {
+            log.error("Invalid album directory: {}", albumDirName);
+        }
+    }
+
+    private boolean isSpecialArtistDir(String dirName) {
+        return "__NEW".equals(dirName) || "Various Artists".equals(dirName);
     }
 
     public static void main(String[] args) {
@@ -83,6 +143,11 @@ public class MDBTest {
         }
 
         log.debug("Current thread name: {}", Thread.currentThread().getName());
+
+/*
+        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+        StatusPrinter.print(lc);
+*/
 
         MDBTest app = new MDBTest(args[0]);
         app.go();
