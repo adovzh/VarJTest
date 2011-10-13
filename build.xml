@@ -167,6 +167,8 @@
                 style="${src.cvgen}/cv-default.xsl"
                 out="${build.cvgen}/adovzhikov-cv.fo"/> -->
         <fop format="application/pdf"
+             force="true"
+             userconfig="${src.cvgen}/userconfig.xml"
              xmlfile="${src.cvgen}/adovzhikov-cv.xml"
              xsltfile="${src.cvgen}/cv-default.xsl"
              outfile="${build}/${cvgen.filename.external}.pdf"/>
