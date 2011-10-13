@@ -1,0 +1,4 @@
+CVGen:
+- extract it into the separate project
+- embed Verdana font
+- implement plain text version
