@@ -116,7 +116,7 @@
             <fo:page-sequence master-reference="A4-portrait">
                 <!-- header -->
                 <fo:static-content flow-name="xsl-region-before">
-                    <fo:table border-bottom-style="solid" border-bottom-width="thin">
+                    <fo:table table-layout="fixed" width="100%" border-bottom-style="solid" border-bottom-width="thin">
                         <fo:table-body>
                             <fo:table-row>
                                 <fo:table-cell display-align="center">
@@ -125,7 +125,7 @@
                                     </fo:block>
                                 </fo:table-cell>
                                 <fo:table-cell>
-                                    <fo:table>
+                                    <fo:table table-layout="fixed" width="100%">
                                         <fo:table-body>
                                             <fo:table-row>
                                                 <fo:table-cell>
@@ -206,9 +206,9 @@
             <xsl:with-param name="section-id">personal-info</xsl:with-param>
             <xsl:with-param name="section-name">PERSONAL INFORMATION</xsl:with-param>
         </xsl:call-template>
-        <fo:table>
+        <fo:table table-layout="fixed" width="100%">
             <fo:table-column column-width="50mm"/>
-            <fo:table-column column-width="150mm"/>
+            <fo:table-column column-width="proportional-column-width(1)"/>
             <fo:table-body>
                 <xsl:call-template name="table-row">
                     <xsl:with-param name="key">Date of birth:</xsl:with-param>
@@ -240,9 +240,9 @@
         <fo:block font-weight="bold">
             <xsl:value-of select="start-date"/>-<xsl:value-of select="end-date"/>, <xsl:value-of select="university-name"/>
         </fo:block>
-        <fo:table>
+        <fo:table table-layout="fixed" width="100%">
             <fo:table-column column-width="50mm"/>
-            <fo:table-column column-width="100mm"/>
+            <fo:table-column column-width="proportional-column-width(1)"/>
             <fo:table-body>
                 <xsl:apply-templates select="department"/>
                 <xsl:apply-templates select="specialty"/>
@@ -308,9 +308,9 @@
             <xsl:with-param name="section-id">skills</xsl:with-param>
             <xsl:with-param name="section-name">SKILLS</xsl:with-param>
         </xsl:call-template>
-        <fo:table>
+        <fo:table table-layout="fixed" width="100%">
             <fo:table-column column-width="60mm"/>
-            <fo:table-column/>
+            <fo:table-column column-width="proportional-column-width(1)"/>
             <fo:table-body>
                 <xsl:for-each select="skill-set">
                     <xsl:call-template name="table-row">
