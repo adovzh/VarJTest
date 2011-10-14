@@ -55,28 +55,6 @@
         <mkdir dir="${build.test.sandbox}"/>
     </target>
 
-    <target name="init.cvgen" depends="init">
-        <!-- define properties -->
-        <property name="build.cvgen" value="${build}/cvgen"/>
-        <property name="src.cvgen" value="${src}/xml/cvgen"/>
-        <property name="src.config.fonts" value="${src.config}/fonts"/>
-        <property name="lib.fop" value="${lib}/fop"/>
-        <property name="cvgen.filename.external" value="Alexander Dovzhikov's CV"/>
-        <property name="dropbox.dir" value="${dropbox.home}/Resume/CVGen"/>
-        <!-- define conditional properties -->
-        <available file="${dropbox.dir}" type="dir" property="dropbox.dir.present"/>
-        <!-- define fop task -->
-        <taskdef name="fop" classname="org.apache.fop.tools.anttasks.Fop">
-            <classpath>
-                <fileset dir="${lib.fop}">
-                    <include name="*.jar"/>
-                </fileset>
-            </classpath>
-        </taskdef>
-        <!-- create output directory -->
-        <mkdir dir="${build}/cvgen"/>
-    </target>
-
     <target name="compile.easyanno" depends="init.easyanno">
         <javac
             srcdir="${src.easyanno}"
@@ -155,25 +133,6 @@
             </batchtest>
         </junit>
         <fail if="junit.failure" message="Unit tests failed."/>
-    </target>
-
-    <target name="cvgen.copy.dropbox" if="dropbox.dir.present">
-        <copy file="${build}/${cvgen.filename.external}.pdf"
-              todir="${dropbox.dir}"/>
-    </target>
-
-    <target name="cvgen" depends="init.cvgen">
-        <!--
-        <xslt in="${src.cvgen}/adovzhikov-cv.xml"
-                style="${src.cvgen}/cv-default.xsl"
-                out="${build.cvgen}/adovzhikov-cv.fo"/> -->
-        <fop format="application/pdf"
-             force="true"
-             userconfig="${src.config.fonts}/userconfig.xml"
-             xmlfile="${src.cvgen}/adovzhikov-cv.xml"
-             xsltfile="${src.cvgen}/cv-default.xsl"
-             outfile="${build}/${cvgen.filename.external}.pdf"/>
-        <antcall target="cvgen.copy.dropbox"/>
     </target>
 
     <target name="all" depends="easyanno.runtests,sandbox.runtests"/>
