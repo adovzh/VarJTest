@@ -37,7 +37,7 @@
     <xsl:variable name="applicantName" select="concat($firstName, ' ', $lastName)"/>
     <xsl:variable name="apos">'</xsl:variable>
     <xsl:template match="/">
-        <fo:root>
+        <fo:root font-family="Verdana" font-size="11pt">
             <fo:layout-master-set>
                 <fo:simple-page-master master-name="A4-portrait"
                                        page-height="29.7cm"
@@ -206,8 +206,8 @@
             <xsl:with-param name="section-id">personal-info</xsl:with-param>
             <xsl:with-param name="section-name">PERSONAL INFORMATION</xsl:with-param>
         </xsl:call-template>
-        <fo:table font-family="sans-serif" font-size="11pt">
-            <fo:table-column column-width="40mm"/>
+        <fo:table>
+            <fo:table-column column-width="50mm"/>
             <fo:table-column column-width="150mm"/>
             <fo:table-body>
                 <xsl:call-template name="table-row">
@@ -237,11 +237,11 @@
         <xsl:apply-templates select="university"/>
     </xsl:template>
     <xsl:template match="university">
-        <fo:block font-family="sans-serif" font-size="11pt" font-weight="bold">
+        <fo:block font-weight="bold">
             <xsl:value-of select="start-date"/>-<xsl:value-of select="end-date"/>, <xsl:value-of select="university-name"/>
         </fo:block>
-        <fo:table font-family="sans-serif" font-size="11pt">
-            <fo:table-column column-width="40mm"/>
+        <fo:table>
+            <fo:table-column column-width="50mm"/>
             <fo:table-column column-width="100mm"/>
             <fo:table-body>
                 <xsl:apply-templates select="department"/>
@@ -281,7 +281,7 @@
             <xsl:with-param name="section-id">objective</xsl:with-param>
             <xsl:with-param name="section-name">OBJECTIVE</xsl:with-param>
         </xsl:call-template>
-        <fo:block font-size="11pt"><xsl:value-of select="."/></fo:block>
+        <fo:block><xsl:value-of select="."/></fo:block>
     </xsl:template>
     <!-- Summary -->
     <xsl:template match="summary">
@@ -296,7 +296,7 @@
                         <fo:block font-size="9pt"><fo:inline font-family="Symbol">&#x2022;</fo:inline></fo:block>
                     </fo:list-item-label>
                     <fo:list-item-body start-indent="body-start()">
-                        <fo:block font-size="11pt"><xsl:value-of select="."/>.</fo:block>
+                        <fo:block><xsl:value-of select="."/>.</fo:block>
                     </fo:list-item-body>
                 </fo:list-item>
             </xsl:for-each>
@@ -308,7 +308,7 @@
             <xsl:with-param name="section-id">skills</xsl:with-param>
             <xsl:with-param name="section-name">SKILLS</xsl:with-param>
         </xsl:call-template>
-        <fo:table font-family="sans-serif" font-size="11pt">
+        <fo:table>
             <fo:table-column column-width="60mm"/>
             <fo:table-column/>
             <fo:table-body>
@@ -334,7 +334,7 @@
             <xsl:with-param name="section-name">CERTIFICATIONS</xsl:with-param>
         </xsl:call-template>
         <xsl:for-each select="cert-provider">
-            <fo:block font-size="11pt" font-weight="bold">
+            <fo:block font-weight="bold">
                 <xsl:attribute name="id">
                     <xsl:value-of select="concat('cert-', @name)"/>
                 </xsl:attribute>
@@ -349,7 +349,7 @@
                         </xsl:attribute>verify</fo:basic-link>)</xsl:if>:
             </fo:block>
             <xsl:for-each select="cert">
-                <fo:block font-size="11pt">
+                <fo:block>
                     <xsl:value-of select="."/>
                     <xsl:if test="@level"> (<xsl:value-of select="@level"/> Level)</xsl:if>
                     on <xsl:value-of select="@date"/>
@@ -366,7 +366,7 @@
             <xsl:with-param name="section-name">PROFESSIONAL EXPERIENCE</xsl:with-param>
         </xsl:call-template>
         <xsl:for-each select="company">
-            <fo:block font-size="11pt">
+            <fo:block>
                 <xsl:attribute name="id">
                     <xsl:value-of select="company-name"/>
                 </xsl:attribute>
@@ -379,19 +379,19 @@
                 </xsl:choose>)
             </fo:block>
             <xsl:for-each select="project">
-                <fo:block font-size="11pt">
+                <fo:block>
                     <fo:inline font-weight="bold">Project: </fo:inline>
                     <xsl:value-of select="project-name"/>
                 </fo:block>
-                <fo:block font-size="11pt">
+                <fo:block>
                     <fo:inline font-weight="bold">Role: </fo:inline>
                     <xsl:value-of select="role"/>
                 </fo:block>
-                <fo:block font-size="11pt">
+                <fo:block>
                     <fo:inline font-weight="bold">Description: </fo:inline>
                     <xsl:value-of select="description"/>.
                 </fo:block>
-                <fo:block font-size="11pt" font-weight="bold">Responsibilities:</fo:block>
+                <fo:block font-weight="bold">Responsibilities:</fo:block>
                 <fo:list-block>
                     <xsl:for-each select="responsibilities/responsibility">
                         <fo:list-item>
@@ -399,12 +399,12 @@
                                 <fo:block font-size="9pt"><fo:inline font-family="Symbol">&#x2022;</fo:inline></fo:block>
                             </fo:list-item-label>
                             <fo:list-item-body start-indent="body-start()">
-                                <fo:block font-size="11pt"><xsl:value-of select="."/>.</fo:block>
+                                <fo:block><xsl:value-of select="."/>.</fo:block>
                             </fo:list-item-body>
                         </fo:list-item>
                     </xsl:for-each>
                 </fo:list-block>
-                <fo:block font-size="11pt">
+                <fo:block>
                     <fo:inline font-weight="bold">Environment: </fo:inline>
                     <xsl:for-each select="environment/env-entry">
                         <xsl:value-of select="."/><xsl:if test="position() &lt; last()">, </xsl:if>
@@ -418,8 +418,7 @@
     <xsl:template name="section">
         <xsl:param name="section-id"/>
         <xsl:param name="section-name"/>
-        <fo:block font-family="sans-serif"
-                  font-size="12pt"
+        <fo:block font-size="12pt"
                   font-weight="bold"
                   background-color="rgb(210,210,210)"
                   margin-top="5pt"
