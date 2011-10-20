@@ -54,6 +54,23 @@ public class MDBTest {
     }
 
     public void go() {
+        long start = System.currentTimeMillis();
+        DirectoryInfo dirInfo = new DirectoryInfo(path);
+        long end = System.currentTimeMillis();
+        log.debug("Directory info built in: {} ms", end - start);
+
+        List<DirectoryInfo> dirs = new ArrayList<DirectoryInfo>();
+
+        for (FSEntry fsEntry : dirInfo.children()) {
+            if (fsEntry.isDirectory()) {
+                dirs.add((DirectoryInfo) fsEntry);
+            } else {
+                log.warn("Unexpected file: {}", fsEntry);
+            }
+        }
+    }
+
+    public void go2() {
         List<File> dirs = new ArrayList<File>();
         List<File> files = new ArrayList<File>();
 
