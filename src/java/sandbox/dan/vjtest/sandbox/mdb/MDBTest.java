@@ -29,12 +29,17 @@
 
 package dan.vjtest.sandbox.mdb;
 
+import dan.vjtest.sandbox.swing.util.UsualApp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,16 +53,67 @@ public class MDBTest {
     private static final Pattern ALBUM_PATTERN = Pattern.compile("(\\d{4})\\s+(.*)");
 
     private final File path;
+    private JProgressBar progress;
 
     public MDBTest(String path) {
         this.path = new File(path);
     }
 
     public void go() {
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                @Override
+                public void run() {
+                    JPanel content = new JPanel(new GridLayout(5, 1));
+                    progress = new JProgressBar();
+                    progress.setStringPainted(true);
+                    progress.setValue(0);
+                    progress.setIndeterminate(false);
+
+                    content.add(progress);
+
+                    UsualApp app = new UsualApp("MDB Test");
+                    app.setContent(content);
+                    app.start();
+                }
+            });
+        } catch (InterruptedException | InvocationTargetException e) {
+            log.error(e.getMessage(), e);
+        }
+
+        Reporter reporter = new Reporter() {
+            @Override
+            public void setLength(final int length) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        progress.setMaximum(length);
+                        progress.setIndeterminate(false);
+                    }
+                });
+            }
+
+            AtomicInteger updateCount = new AtomicInteger();
+
+            @Override
+            public void updateProgress(final String message) {
+                if (updateCount.getAndIncrement() == 0) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            int value = progress.getValue();
+                            progress.setValue(value + updateCount.getAndSet(0));
+                            progress.setString(message);
+                        }
+                    });
+                }
+            }
+        };
+
         FSFactory factory = new FSFactory();
 
         long start = System.currentTimeMillis();
-        DirectoryInfo dirInfo = (DirectoryInfo) factory.createFSEntry(path);
+        DirectoryInfo dirInfo = (DirectoryInfo) factory.createFSEntry(path, reporter);
         long end = System.currentTimeMillis();
         log.info("Directory info built in: {} ms", end - start);
 

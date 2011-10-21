@@ -50,26 +50,48 @@ public class FSFactory {
     private static final Logger log = LoggerFactory.getLogger(FSFactory.class);
     private static final ForkJoinPool POOL = new ForkJoinPool();
 
-    FSEntry createFSEntry(File file) {
-        return POOL.invoke(new FSEntryBuilder(file));
+    FSEntry createFSEntry(File file, Reporter reporter) {
+        if (reporter != null) {
+            reporter.setLength(countFiles(file));
+        }
+
+        return POOL.invoke(new FSEntryBuilder(file, reporter));
+    }
+
+    private static int countFiles(File path) {
+        int count = 1;
+
+        if (path.isDirectory()) {
+            for (File file : path.listFiles()) {
+                count += countFiles(file);
+            }
+        }
+
+        return count;
     }
 
     static class FSEntryBuilder extends RecursiveTask<FSEntry> {
         final File root;
+        final Reporter reporter;
 
-        public FSEntryBuilder(File file) {
+        public FSEntryBuilder(File file, Reporter reporter) {
             this.root = file;
+            this.reporter = reporter;
         }
 
         @Override
         protected FSEntry compute() {
+            if (reporter != null) {
+                reporter.updateProgress(root.getName());
+            }
+
             if (root.isDirectory()) {
                 File[] files = root.listFiles();
                 DirectoryInfo directoryInfo = new DirectoryInfo(root.getName());
                 Collection<FSEntryBuilder> tasks = new ArrayList<>(files.length);
 
                 for (File file : files) {
-                    tasks.add(new FSEntryBuilder(file));
+                    tasks.add(new FSEntryBuilder(file, reporter));
                 }
 
                 for (FSEntryBuilder task : invokeAll(tasks)) {
