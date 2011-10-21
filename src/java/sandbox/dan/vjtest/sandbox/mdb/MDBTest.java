@@ -54,10 +54,12 @@ public class MDBTest {
     }
 
     public void go() {
+        FSFactory factory = new FSFactory();
+
         long start = System.currentTimeMillis();
-        DirectoryInfo dirInfo = new DirectoryInfo(path);
+        DirectoryInfo dirInfo = (DirectoryInfo) factory.createFSEntry(path);
         long end = System.currentTimeMillis();
-        log.debug("Directory info built in: {} ms", end - start);
+        log.info("Directory info built in: {} ms", end - start);
 
         List<DirectoryInfo> dirs = new ArrayList<DirectoryInfo>();
 

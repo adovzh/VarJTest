@@ -29,7 +29,6 @@
 
 package dan.vjtest.sandbox.mdb;
 
-import java.io.File;
 import java.util.Collection;
 
 /**
@@ -37,9 +36,10 @@ import java.util.Collection;
  */
 public class FileInfo extends FSEntry {
 
-    public FileInfo(File file) {
-        super(file.getName()); // todo: get rid of java.io
+    FileInfo(String name) {
+        super(name);
     }
+
     @Override
     public boolean isDirectory() {
         return false;

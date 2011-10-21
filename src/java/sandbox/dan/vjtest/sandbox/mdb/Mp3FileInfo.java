@@ -22,39 +22,46 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * DirectoryInfo.java
+ * Mp3FileInfo.java
  *
- * Created on 20.10.2011 19:10:39
+ * Created on 21.10.2011 12:58:50
  */
 
 package dan.vjtest.sandbox.mdb;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * @author Alexander Dovzhikov
  */
-public class DirectoryInfo extends FSEntry {
-    private final List<FSEntry> children = new ArrayList<>();
+public class Mp3FileInfo extends FileInfo {
+    private String artist;
+    private String album;
+    private String title;
 
-    DirectoryInfo(String name) {
+    Mp3FileInfo(String name) {
         super(name);
     }
 
-    void addChild(FSEntry child) {
-        children.add(child);
+    public String getArtist() {
+        return artist;
     }
 
-    @Override
-    public boolean isDirectory() {
-        return true;
+    public String getAlbum() {
+        return album;
     }
 
-    @Override
-    public Collection<FSEntry> children() {
-        return Collections.unmodifiableCollection(children);
+    public String getTitle() {
+        return title;
+    }
+
+    void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    void setAlbum(String album) {
+        this.album = album;
+    }
+
+    void setTitle(String title) {
+        this.title = title;
     }
 }
