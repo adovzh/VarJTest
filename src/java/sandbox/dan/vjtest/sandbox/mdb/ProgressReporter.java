@@ -22,39 +22,51 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * FSEntry.java
+ * ProgressReporter.java
  *
- * Created on 20.10.2011 19:09:22
+ * Created on 21.10.2011 19:18:30
  */
 
 package dan.vjtest.sandbox.mdb;
 
-import java.util.Collection;
+import javax.swing.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @author Alexander Dovzhikov
- */
-public abstract class FSEntry {
-    private final String name;
+* @author Alexander Dovzhikov
+*/
+public class ProgressReporter implements Reporter {
+    private final JProgressBar progress;
+    private final AtomicInteger updateCount;
 
-    public FSEntry(String name) {
-        this.name = name;
+
+    public ProgressReporter(JProgressBar progress) {
+        this.progress = progress;
+        this.updateCount = new AtomicInteger(0);
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public abstract boolean isDirectory();
-
-    public abstract Collection<FSEntry> children();
 
     @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("FSEntry");
-        sb.append("{name='").append(name).append('\'');
-        sb.append('}');
-        return sb.toString();
+    public void setLength(final int length) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                progress.setMaximum(length);
+                progress.setIndeterminate(false);
+            }
+        });
+    }
+
+    @Override
+    public void updateProgress(final String message) {
+        if (updateCount.getAndIncrement() == 0) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    int value = progress.getValue();
+                    progress.setValue(value + updateCount.getAndSet(0));
+                    progress.setString(String.format("%d%% - %s", Math.round(progress.getPercentComplete() * 100), message));
+                }
+            });
+        }
     }
 }

@@ -39,9 +39,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.RecursiveTask;
+import java.util.concurrent.*;
 
 /**
  * @author Alexander Dovzhikov
@@ -122,6 +120,89 @@ public class FSFactory {
                 return mp3FileInfo;
             } else {
                 return new FileInfo(root.getName());
+            }
+        }
+    }
+
+    void analyzeArtists(Collection<DirectoryInfo> artistDirs, Reporter reporter) {
+        if (reporter != null) {
+            reporter.setLength(artistDirs.size());
+        }
+
+        Collection<ForkJoinTask<Void>> tasks = new ArrayList<>();
+
+        for (DirectoryInfo artistDir : artistDirs) {
+            tasks.add(POOL.submit(new ArtistAnalyzer(artistDir, reporter)));
+        }
+
+        for (ForkJoinTask<Void> task : tasks) {
+            task.join();
+        }
+    }
+
+    static class ArtistAnalyzer extends RecursiveAction {
+        final DirectoryInfo dir;
+        final Reporter reporter;
+
+        public ArtistAnalyzer(DirectoryInfo dir, Reporter reporter) {
+            this.dir = dir;
+            this.reporter = reporter;
+        }
+
+        @Override
+        protected void compute() {
+            if (reporter != null) {
+                reporter.updateProgress(dir.getName());
+            }
+
+            log.info("Processing directory: {}", dir);
+
+            String artist = dir.getName();
+
+            if (isSpecialArtistDir(artist)) {
+                log.debug("Skipping special dir: {}", artist);
+            } else {
+                log.debug("Artist: {}", artist);
+
+                int tempCounter = 0;
+                Collection<FSEntry> children = dir.children();
+                Collection<RecursiveAction> subTasks = new ArrayList<>(children.size());
+
+                for (FSEntry entry : children) {
+                    if (entry.isDirectory()) {
+                        subTasks.add(new AlbumAnalyzer((DirectoryInfo) entry));
+                    }
+                }
+
+                invokeAll(subTasks);
+
+//                for (File f : dir.listFiles()) {
+//                if (tempCounter++ > 0)
+//                    return;
+
+//                    processAlbumDir(f, artist);
+//                }
+            }
+        }
+
+        private boolean isSpecialArtistDir(String dirName) {
+            return "__NEW".equals(dirName) || "Various Artists".equals(dirName);
+        }
+    }
+
+    static class AlbumAnalyzer extends RecursiveAction {
+        final DirectoryInfo dir;
+
+        public AlbumAnalyzer(DirectoryInfo dir) {
+            this.dir = dir;
+        }
+
+        @Override
+        protected void compute() {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                // empty
             }
         }
     }

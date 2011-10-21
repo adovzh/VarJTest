@@ -39,7 +39,6 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,7 +52,8 @@ public class MDBTest {
     private static final Pattern ALBUM_PATTERN = Pattern.compile("(\\d{4})\\s+(.*)");
 
     private final File path;
-    private JProgressBar progress;
+    private JProgressBar buildProgress;
+    private JProgressBar artistAnalyzeProgress;
 
     public MDBTest(String path) {
         this.path = new File(path);
@@ -65,12 +65,17 @@ public class MDBTest {
                 @Override
                 public void run() {
                     JPanel content = new JPanel(new GridLayout(5, 1));
-                    progress = new JProgressBar();
-                    progress.setStringPainted(true);
-                    progress.setValue(0);
-                    progress.setIndeterminate(false);
+                    buildProgress = new JProgressBar();
+                    buildProgress.setStringPainted(true);
+                    buildProgress.setValue(0);
+                    buildProgress.setIndeterminate(false);
+                    artistAnalyzeProgress = new JProgressBar();
+                    artistAnalyzeProgress.setStringPainted(true);
+                    artistAnalyzeProgress.setValue(0);
+                    artistAnalyzeProgress.setIndeterminate(false);
 
-                    content.add(progress);
+                    content.add(buildProgress);
+                    content.add(artistAnalyzeProgress);
 
                     UsualApp app = new UsualApp("MDB Test");
                     app.setContent(content);
@@ -81,39 +86,10 @@ public class MDBTest {
             log.error(e.getMessage(), e);
         }
 
-        Reporter reporter = new Reporter() {
-            @Override
-            public void setLength(final int length) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        progress.setMaximum(length);
-                        progress.setIndeterminate(false);
-                    }
-                });
-            }
-
-            AtomicInteger updateCount = new AtomicInteger();
-
-            @Override
-            public void updateProgress(final String message) {
-                if (updateCount.getAndIncrement() == 0) {
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            int value = progress.getValue();
-                            progress.setValue(value + updateCount.getAndSet(0));
-                            progress.setString(message);
-                        }
-                    });
-                }
-            }
-        };
-
         FSFactory factory = new FSFactory();
 
         long start = System.currentTimeMillis();
-        DirectoryInfo dirInfo = (DirectoryInfo) factory.createFSEntry(path, reporter);
+        DirectoryInfo dirInfo = (DirectoryInfo) factory.createFSEntry(path, new ProgressReporter(buildProgress));
         long end = System.currentTimeMillis();
         log.info("Directory info built in: {} ms", end - start);
 
@@ -126,6 +102,8 @@ public class MDBTest {
                 log.warn("Unexpected file: {}", fsEntry);
             }
         }
+
+        factory.analyzeArtists(dirs, new ProgressReporter(artistAnalyzeProgress));
     }
 
     public void go2() {
@@ -227,4 +205,5 @@ public class MDBTest {
         MDBTest app = new MDBTest(args[0]);
         app.go();
     }
+
 }
