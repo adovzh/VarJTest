@@ -29,10 +29,14 @@
 
 package dan.vjtest.sandbox.mdb;
 
+import dan.vjtest.sandbox.swing.util.UsualApp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.MatchResult;
@@ -48,12 +52,61 @@ public class MDBTest {
     private static final Pattern ALBUM_PATTERN = Pattern.compile("(\\d{4})\\s+(.*)");
 
     private final File path;
+    private JProgressBar buildProgress;
+    private JProgressBar artistAnalyzeProgress;
 
     public MDBTest(String path) {
         this.path = new File(path);
     }
 
     public void go() {
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                @Override
+                public void run() {
+                    JPanel content = new JPanel(new GridLayout(5, 1));
+                    buildProgress = new JProgressBar();
+                    buildProgress.setStringPainted(true);
+                    buildProgress.setValue(0);
+                    buildProgress.setIndeterminate(false);
+                    artistAnalyzeProgress = new JProgressBar();
+                    artistAnalyzeProgress.setStringPainted(true);
+                    artistAnalyzeProgress.setValue(0);
+                    artistAnalyzeProgress.setIndeterminate(false);
+
+                    content.add(buildProgress);
+                    content.add(artistAnalyzeProgress);
+
+                    UsualApp app = new UsualApp("MDB Test");
+                    app.setContent(content);
+                    app.start();
+                }
+            });
+        } catch (InterruptedException | InvocationTargetException e) {
+            log.error(e.getMessage(), e);
+        }
+
+        FSFactory factory = new FSFactory();
+
+        long start = System.currentTimeMillis();
+        DirectoryInfo dirInfo = (DirectoryInfo) factory.createFSEntry(path, new ProgressReporter(buildProgress));
+        long end = System.currentTimeMillis();
+        log.info("Directory info built in: {} ms", end - start);
+
+        List<DirectoryInfo> dirs = new ArrayList<DirectoryInfo>();
+
+        for (FSEntry fsEntry : dirInfo.children()) {
+            if (fsEntry.isDirectory()) {
+                dirs.add((DirectoryInfo) fsEntry);
+            } else {
+                log.warn("Unexpected file: {}", fsEntry);
+            }
+        }
+
+        factory.analyzeArtists(dirs, new ProgressReporter(artistAnalyzeProgress));
+    }
+
+    public void go2() {
         List<File> dirs = new ArrayList<File>();
         List<File> files = new ArrayList<File>();
 
@@ -152,4 +205,5 @@ public class MDBTest {
         MDBTest app = new MDBTest(args[0]);
         app.go();
     }
+
 }
