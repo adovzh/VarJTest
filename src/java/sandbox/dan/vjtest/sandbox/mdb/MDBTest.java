@@ -78,6 +78,7 @@ public class MDBTest {
                     content.add(artistAnalyzeProgress);
 
                     UsualApp app = new UsualApp("MDB Test");
+                    app.setSize(new Dimension(500, 150));
                     app.setContent(content);
                     app.start();
                 }
