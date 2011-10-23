@@ -33,7 +33,7 @@
         </encoder>
     </appender>
 
-    <logger name="dan.vjtest.sandbox.mdb" level="info"/>
+    <logger name="dan.vjtest.sandbox.mdb" level="error"/>
 
     <root level="debug">
         <appender-ref ref="STDOUT"/>

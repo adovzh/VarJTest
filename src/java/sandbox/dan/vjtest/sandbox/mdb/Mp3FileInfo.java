@@ -36,9 +36,10 @@ public class Mp3FileInfo extends FileInfo {
     private String artist;
     private String album;
     private String title;
+    private String year;
 
-    Mp3FileInfo(String name) {
-        super(name);
+    Mp3FileInfo(DirectoryInfo parent, String name) {
+        super(parent, name);
     }
 
     public String getArtist() {
@@ -53,6 +54,10 @@ public class Mp3FileInfo extends FileInfo {
         return title;
     }
 
+    public String getYear() {
+        return year;
+    }
+
     void setArtist(String artist) {
         this.artist = artist;
     }
@@ -63,5 +68,9 @@ public class Mp3FileInfo extends FileInfo {
 
     void setTitle(String title) {
         this.title = title;
+    }
+
+    void setYear(String year) {
+        this.year = year;
     }
 }

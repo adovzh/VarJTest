@@ -40,8 +40,8 @@ import java.util.List;
 public class DirectoryInfo extends FSEntry {
     private final List<FSEntry> children = new ArrayList<>();
 
-    DirectoryInfo(String name) {
-        super(name);
+    DirectoryInfo(DirectoryInfo parent, String name) {
+        super(parent, name);
     }
 
     void addChild(FSEntry child) {

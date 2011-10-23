@@ -35,14 +35,26 @@ import java.util.Collection;
  * @author Alexander Dovzhikov
  */
 public abstract class FSEntry {
+    private final DirectoryInfo parent;
     private final String name;
 
-    public FSEntry(String name) {
+    public FSEntry(DirectoryInfo parent, String name) {
+        this.parent = parent;
         this.name = name;
     }
 
     public String getName() {
         return name;
+    }
+    
+    public String getFullName() {
+        StringBuilder sb = new StringBuilder();
+
+        if (parent != null) {
+            sb.append(parent.getFullName()).append('/');
+        }
+
+        return sb.append(getName()).toString();
     }
 
     public abstract boolean isDirectory();
@@ -53,7 +65,7 @@ public abstract class FSEntry {
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("FSEntry");
-        sb.append("{name='").append(name).append('\'');
+        sb.append("{name='").append(getFullName()).append('\'');
         sb.append('}');
         return sb.toString();
     }

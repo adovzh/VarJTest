@@ -40,6 +40,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.*;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Alexander Dovzhikov
@@ -53,7 +56,7 @@ public class FSFactory {
             reporter.setLength(countFiles(file));
         }
 
-        return POOL.invoke(new FSEntryBuilder(file, reporter));
+        return POOL.invoke(new FSEntryBuilder(null, file, reporter));
     }
 
     private static int countFiles(File path) {
@@ -69,10 +72,12 @@ public class FSFactory {
     }
 
     static class FSEntryBuilder extends RecursiveTask<FSEntry> {
+        final DirectoryInfo parent;
         final File root;
         final Reporter reporter;
 
-        public FSEntryBuilder(File file, Reporter reporter) {
+        public FSEntryBuilder(DirectoryInfo parent, File file, Reporter reporter) {
+            this.parent = parent;
             this.root = file;
             this.reporter = reporter;
         }
@@ -85,11 +90,11 @@ public class FSFactory {
 
             if (root.isDirectory()) {
                 File[] files = root.listFiles();
-                DirectoryInfo directoryInfo = new DirectoryInfo(root.getName());
+                DirectoryInfo directoryInfo = new DirectoryInfo(parent, root.getName());
                 Collection<FSEntryBuilder> tasks = new ArrayList<>(files.length);
 
                 for (File file : files) {
-                    tasks.add(new FSEntryBuilder(file, reporter));
+                    tasks.add(new FSEntryBuilder(directoryInfo, file, reporter));
                 }
 
                 for (FSEntryBuilder task : invokeAll(tasks)) {
@@ -102,7 +107,7 @@ public class FSFactory {
 
                 return directoryInfo;
             } else if (root.getName().endsWith(".mp3")) {
-                Mp3FileInfo mp3FileInfo = new Mp3FileInfo(root.getName());
+                Mp3FileInfo mp3FileInfo = new Mp3FileInfo(parent, root.getName());
 
                 try {
                     AudioFile audioFile = AudioFileIO.read(root);
@@ -113,13 +118,14 @@ public class FSFactory {
                     mp3FileInfo.setArtist(tag.getFirstArtist());
                     mp3FileInfo.setAlbum(tag.getFirstAlbum());
                     mp3FileInfo.setTitle(tag.getFirstTitle());
+                    mp3FileInfo.setYear(tag.getFirstYear());
                 } catch (CannotReadException e) {
                     log.error("Error parsing mp3 file", e);
                 }
 
                 return mp3FileInfo;
             } else {
-                return new FileInfo(root.getName());
+                return new FileInfo(parent, root.getName());
             }
         }
     }
@@ -160,17 +166,17 @@ public class FSFactory {
             String artist = dir.getName();
 
             if (isSpecialArtistDir(artist)) {
-                log.debug("Skipping special dir: {}", artist);
+                log.debug("Skipping special dir: {}", dir.getFullName());
             } else {
                 log.debug("Artist: {}", artist);
 
-                int tempCounter = 0;
+//                int tempCounter = 0;
                 Collection<FSEntry> children = dir.children();
                 Collection<RecursiveAction> subTasks = new ArrayList<>(children.size());
 
                 for (FSEntry entry : children) {
                     if (entry.isDirectory()) {
-                        subTasks.add(new AlbumAnalyzer((DirectoryInfo) entry));
+                        subTasks.add(new AlbumAnalyzer((DirectoryInfo) entry, artist));
                     }
                 }
 
@@ -191,14 +197,52 @@ public class FSFactory {
     }
 
     static class AlbumAnalyzer extends RecursiveAction {
-        final DirectoryInfo dir;
+        static final Pattern ALBUM_PATTERN = Pattern.compile("(\\d{4})\\s+(.*)");
 
-        public AlbumAnalyzer(DirectoryInfo dir) {
+        final DirectoryInfo dir;
+        final String artist;
+
+        public AlbumAnalyzer(DirectoryInfo dir, String artist) {
             this.dir = dir;
+            this.artist = artist;
         }
 
         @Override
         protected void compute() {
+            // album directory name should match '%year %album'
+            String albumDir = dir.getName();
+            Matcher matcher = ALBUM_PATTERN.matcher(albumDir);
+            
+            if (matcher.matches()) {
+                MatchResult matchResult = matcher.toMatchResult();
+                String year = matchResult.group(1);
+                String album = matchResult.group(2);
+
+                // all mp3 files have the corresponding artist name, year and album
+                for (FSEntry entry : dir.children()) {
+                    if (entry instanceof Mp3FileInfo) {
+                        Mp3FileInfo mp3 = (Mp3FileInfo) entry;
+                        
+                        if (!artist.equals(mp3.getArtist())) {
+                            log.error("For '{}': incorrect artist name: '{}', should be '{}'",
+                                    new Object[]{entry.getFullName(), mp3.getArtist(), artist});
+                        }
+                        
+                        if (!year.equals(mp3.getYear())) {
+                            log.error("For '{}': incorrect year: '{}', should be '{}'",
+                                    new Object[]{entry.getFullName(), mp3.getYear(), year});
+                        }
+                        
+                        if (!album.equals(mp3.getAlbum())) {
+                            log.error("For '{}': incorrect album: '{}', should be '{}'",
+                                    new Object[]{entry.getFullName(), mp3.getAlbum(), album});
+                        }
+                    }
+                }
+            } else {
+                log.error("Invalid album directory: '{}'", dir.getFullName());
+            }
+
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

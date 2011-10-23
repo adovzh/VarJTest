@@ -36,8 +36,8 @@ import java.util.Collection;
  */
 public class FileInfo extends FSEntry {
 
-    FileInfo(String name) {
-        super(name);
+    FileInfo(DirectoryInfo parent, String name) {
+        super(parent, name);
     }
 
     @Override
