@@ -22,63 +22,63 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * FSEntry.java
+ * ArtistAnalyzer.java
  *
- * Created on 20.10.2011 19:09:22
+ * Created on 24.10.2011 16:41:18
  */
 
 package dan.vjtest.sandbox.mdb;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.RecursiveAction;
 
 /**
- * @author Alexander Dovzhikov
- */
-public abstract class FSEntry {
-    private final DirectoryInfo parent;
-    private final String name;
+* @author Alexander Dovzhikov
+*/
+public class ArtistAnalyzer extends RecursiveAction {
+    private static final Logger log = LoggerFactory.getLogger(ArtistAnalyzer.class);
 
-    public FSEntry(DirectoryInfo parent, String name) {
-        this.parent = parent;
-        this.name = name;
+    private final DirectoryInfo dir;
+    private final Reporter reporter;
+
+    public ArtistAnalyzer(DirectoryInfo dir, Reporter reporter) {
+        this.dir = dir;
+        this.reporter = reporter;
     }
-
-    public String getName() {
-        return name;
-    }
-    
-    public String getFullName() {
-        StringBuilder sb = new StringBuilder();
-
-        if (parent != null) {
-            sb.append(parent.getFullName()).append('/');
-        }
-
-        return sb.append(getName()).toString();
-    }
-
-    public int getLevel() {
-        int level = 0;
-        FSEntry p = parent;
-
-        while (p != null) {
-            level++;
-            p = p.parent;
-        }
-
-        return level;
-    }
-
-    public abstract boolean isDirectory();
-
-    public abstract Collection<FSEntry> children();
 
     @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("FSEntry");
-        sb.append("{name='").append(getFullName()).append('\'');
-        sb.append('}');
-        return sb.toString();
+    protected void compute() {
+        if (reporter != null) {
+            reporter.updateProgress(dir.getFullName());
+        }
+
+        log.info("Processing directory: {}", dir);
+
+        String artist = dir.getName();
+
+        if (isSpecialArtistDir(artist)) {
+            log.debug("Skipping special dir: {}", dir.getFullName());
+        } else {
+            log.debug("Artist: {}", artist);
+
+            Collection<FSEntry> children = dir.children();
+            Collection<RecursiveAction> subTasks = new ArrayList<>(children.size());
+
+            for (FSEntry entry : children) {
+                if (entry.isDirectory()) {
+                    subTasks.add(new AlbumAnalyzer((DirectoryInfo) entry, artist));
+                }
+            }
+
+            invokeAll(subTasks);
+        }
+    }
+
+    private boolean isSpecialArtistDir(String dirName) {
+        return "__NEW".equals(dirName) || "Various Artists".equals(dirName);
     }
 }
