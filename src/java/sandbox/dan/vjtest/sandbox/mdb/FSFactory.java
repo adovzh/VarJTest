@@ -85,7 +85,7 @@ public class FSFactory {
         @Override
         protected FSEntry compute() {
             if (reporter != null) {
-                reporter.updateProgress(root.getName());
+                reporter.updateProgress(root.getAbsolutePath());
             }
 
             if (root.isDirectory()) {
@@ -158,7 +158,7 @@ public class FSFactory {
         @Override
         protected void compute() {
             if (reporter != null) {
-                reporter.updateProgress(dir.getName());
+                reporter.updateProgress(dir.getFullName());
             }
 
             log.info("Processing directory: {}", dir);
@@ -170,7 +170,6 @@ public class FSFactory {
             } else {
                 log.debug("Artist: {}", artist);
 
-//                int tempCounter = 0;
                 Collection<FSEntry> children = dir.children();
                 Collection<RecursiveAction> subTasks = new ArrayList<>(children.size());
 
@@ -181,13 +180,6 @@ public class FSFactory {
                 }
 
                 invokeAll(subTasks);
-
-//                for (File f : dir.listFiles()) {
-//                if (tempCounter++ > 0)
-//                    return;
-
-//                    processAlbumDir(f, artist);
-//                }
             }
         }
 
@@ -241,12 +233,6 @@ public class FSFactory {
                 }
             } else {
                 log.error("Invalid album directory: '{}'", dir.getFullName());
-            }
-
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                // empty
             }
         }
     }

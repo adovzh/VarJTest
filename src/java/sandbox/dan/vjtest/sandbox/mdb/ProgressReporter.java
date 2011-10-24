@@ -29,20 +29,53 @@
 
 package dan.vjtest.sandbox.mdb;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
+import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
 * @author Alexander Dovzhikov
 */
 public class ProgressReporter implements Reporter {
-    private final JProgressBar progress;
-    private final AtomicInteger updateCount;
+    private static final Logger log = LoggerFactory.getLogger(ProgressReporter.class);
 
+    private JProgressBar progress;
+    private JLabel statusLabel;
+    private AtomicInteger updateCount;
+    private JPanel content;
 
-    public ProgressReporter(JProgressBar progress) {
-        this.progress = progress;
+    public ProgressReporter(final String name) {
         this.updateCount = new AtomicInteger(0);
+
+        Runnable initializer = new Runnable() {
+            public void run() {
+                statusLabel = new JLabel(" ");
+                progress = new JProgressBar();
+                progress.setStringPainted(true);
+                progress.setValue(0);
+                progress.setIndeterminate(true);
+
+                content = new JPanel(new BorderLayout());
+                content.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+                content.add(progress, BorderLayout.CENTER);
+                content.add(new JLabel(name + ":"), BorderLayout.NORTH);
+                content.add(statusLabel, BorderLayout.SOUTH);
+            }
+        };
+
+        if (SwingUtilities.isEventDispatchThread()) {
+            initializer.run();
+        } else {
+            try {
+                SwingUtilities.invokeAndWait(initializer);
+            } catch (InterruptedException | InvocationTargetException e) {
+                log.error(e.getMessage(), e);
+            }
+        }
     }
 
     @Override
@@ -64,9 +97,13 @@ public class ProgressReporter implements Reporter {
                 public void run() {
                     int value = progress.getValue();
                     progress.setValue(value + updateCount.getAndSet(0));
-                    progress.setString(String.format("%d%% - %s", Math.round(progress.getPercentComplete() * 100), message));
+                    statusLabel.setText(message);
                 }
             });
         }
+    }
+
+    public Component getContent() {
+        return content;
     }
 }

@@ -52,33 +52,28 @@ public class MDBTest {
     private static final Pattern ALBUM_PATTERN = Pattern.compile("(\\d{4})\\s+(.*)");
 
     private final File path;
-    private JProgressBar buildProgress;
-    private JProgressBar artistAnalyzeProgress;
+//    private JProgressBar buildProgress;
+//    private JProgressBar artistAnalyzeProgress;
 
     public MDBTest(String path) {
         this.path = new File(path);
     }
 
     public void go() {
+        final ProgressReporter buildReporter = new ProgressReporter("File system scan");
+        final ProgressReporter artistAnalyzeReporter = new ProgressReporter("Artist analyze");
+
         try {
             SwingUtilities.invokeAndWait(new Runnable() {
                 @Override
                 public void run() {
-                    JPanel content = new JPanel(new GridLayout(5, 1));
-                    buildProgress = new JProgressBar();
-                    buildProgress.setStringPainted(true);
-                    buildProgress.setValue(0);
-                    buildProgress.setIndeterminate(false);
-                    artistAnalyzeProgress = new JProgressBar();
-                    artistAnalyzeProgress.setStringPainted(true);
-                    artistAnalyzeProgress.setValue(0);
-                    artistAnalyzeProgress.setIndeterminate(false);
+                    JPanel content = new JPanel(new GridLayout(2, 1));
 
-                    content.add(buildProgress);
-                    content.add(artistAnalyzeProgress);
+                    content.add(buildReporter.getContent());
+                    content.add(artistAnalyzeReporter.getContent());
 
                     UsualApp app = new UsualApp("MDB Test");
-                    app.setSize(new Dimension(500, 150));
+                    app.setSize(new Dimension(500, 130));
                     app.setContent(content);
                     app.start();
                 }
@@ -90,7 +85,7 @@ public class MDBTest {
         FSFactory factory = new FSFactory();
 
         long start = System.currentTimeMillis();
-        DirectoryInfo dirInfo = (DirectoryInfo) factory.createFSEntry(path, new ProgressReporter(buildProgress));
+        DirectoryInfo dirInfo = (DirectoryInfo) factory.createFSEntry(path, buildReporter);
         long end = System.currentTimeMillis();
         log.info("Directory info built in: {} ms", end - start);
 
@@ -104,7 +99,7 @@ public class MDBTest {
             }
         }
 
-        factory.analyzeArtists(dirs, new ProgressReporter(artistAnalyzeProgress));
+        factory.analyzeArtists(dirs, artistAnalyzeReporter);
     }
 
     public void go2() {
