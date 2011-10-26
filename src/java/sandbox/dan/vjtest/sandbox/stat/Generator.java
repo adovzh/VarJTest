@@ -1,31 +1,29 @@
 package dan.vjtest.sandbox.stat;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Alexander Dovzhikov
  */
-public class Generator implements Runnable {
-    private final double lo;
-    private final double hi;
-    private final Consumer consumer;
+public class Generator {
     private final Random random = new Random();
 
-    public Generator(double lo, double hi, Consumer consumer) {
-        this.lo = lo;
-        this.hi = hi;
-        this.consumer = consumer;
-    }
-
-    @Override
-    public void run() {
-        while (!Thread.interrupted()) {
-            consumer.put(lo + random.nextDouble() * (hi - lo));
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                return;
-            }
+    public Generator(final double lo, final double hi, final GeneratorListener listener, ExecutorService executor, int numTasks) {
+        for (int i = 0; i < numTasks; i++) {
+            executor.submit(new Runnable() {
+                @Override
+                public void run() {
+                    while (!Thread.interrupted()) {
+                        listener.eventGenerated(lo + random.nextDouble() * (hi - lo));
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            return;
+                        }
+                    }
+                }
+            });
         }
     }
 }
