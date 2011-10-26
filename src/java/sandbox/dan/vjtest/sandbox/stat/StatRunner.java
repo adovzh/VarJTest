@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -50,8 +51,8 @@ public class StatRunner implements GeneratorListener {
         Report report;
 
         synchronized (this) {
-            report = new Report(data.toArray(new Double[data.size()]), sum, sum2, min, max);
-            data = new ArrayList<>();
+            report = new Report(data, sum, sum2);
+            data.clear();
             sum = 0;
             sum2 = 0;
             min = Double.MAX_VALUE;
@@ -83,21 +84,31 @@ public class StatRunner implements GeneratorListener {
     }
 
     private static class Report {
-        final Double[] data;
+        final double[] data;
         final double sum;
         final double sum2;
-        final double min;
-        final double max;
 
-        private Report(Double[] data, double sum, double sum2, double min, double max) {
+        private Report(List<Double> data, double sum, double sum2) {
+            this.data = toArray(data);
             this.sum2 = sum2;
             this.sum = sum;
-            this.max = max;
-            this.min = min;
-            this.data = data;
+        }
+        
+        double[] toArray(List<Double> list) {
+            int i = 0;
+            double[] arr = new double[list.size()];
+            
+            for (Double d : list)
+                arr[i++] = d;
+            
+            Arrays.sort(arr);
+
+            return arr;
         }
 
         void process() {
+            double min = getMin();
+            double max = getMax();
             double avg = sum / data.length;
             double avg2 = sum2 / data.length;
             double stddev = Math.sqrt(avg2 - avg * avg);
@@ -116,6 +127,14 @@ public class StatRunner implements GeneratorListener {
             } else {
                 return Double.NaN;
             }
+        }
+
+        double getMin() {
+            return (data.length > 0) ? data[0] : Double.NaN;
+        }
+
+        double getMax() {
+            return (data.length > 0) ? data[data.length - 1] : Double.NaN;
         }
     }
 }
