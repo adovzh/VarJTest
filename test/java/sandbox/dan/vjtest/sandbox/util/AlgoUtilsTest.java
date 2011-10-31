@@ -31,6 +31,8 @@ package dan.vjtest.sandbox.util;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -39,6 +41,8 @@ import java.util.Random;
  * @author Alexander Dovzhikov
  */
 public class AlgoUtilsTest {
+    private static final Logger log = LoggerFactory.getLogger(AlgoUtilsTest.class);
+
     private Random random = new Random();
 
     @Test
@@ -56,5 +60,38 @@ public class AlgoUtilsTest {
             Arrays.sort(data);
             Assert.assertEquals("Round " + round, data[k], min);
         }
+    }
+    
+    @Test
+    public void testAll() {
+        int numTests = 1000;
+        
+        for (int round = 1; round <= numTests; round++) {
+            // prepare data
+            long[] data = new long[(round - 1) * 10 + 1];
+
+            for (int i = 0; i < data.length; i++) {
+                data[i] = random.nextLong() % 1000;
+            }
+            
+            // prepare sorted copy
+            long[] sortedCopy = copy(data);
+            Arrays.sort(sortedCopy);
+
+            for (int k = 1; k <= data.length; k++) {
+                // test kth order statistic
+                long[] dataToAnalyze = copy(data);
+                long stat = AlgoUtils.select(dataToAnalyze, 0, dataToAnalyze.length - 1, k);
+                Assert.assertEquals("Round " + round + ", k = " + k, sortedCopy[k - 1], stat);
+            }
+
+            log.debug("Round {} finished", round);
+        }
+    }
+    
+    private static long[] copy(long[] origin) {
+        long[] arr = new long[origin.length];
+        System.arraycopy(origin, 0, arr, 0, origin.length);
+        return arr;
     }
 }
