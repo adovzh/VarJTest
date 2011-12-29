@@ -39,6 +39,7 @@ public class RollMain {
 		box.startRoll();
 		box.startStrategyWatcher(args[0]);
 		box.setUp();
+		box.startShuffler();
 
 		Runtime.getRuntime().addShutdownHook(new Thread("Shutdown-hook") {
 			@Override

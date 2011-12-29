@@ -33,25 +33,30 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Random;
 
 /**
  * @author Alexander Dovzhikov
  */
 public class RollBox {
 	private final LinkedList<RollSymbol> symbols = new LinkedList<>();
+	private final Queue<Character> characterPool = new LinkedList<>();
 
 	private final ThreadGroup rollBoxGroup;
 
 	public RollBox() {
 		rollBoxGroup = new ThreadGroup("RollBoxGroup");
+		
+		for (char c = 'A'; c <= 'Z'; c++)
+			characterPool.add(c);
 	}
 
 	public void setUp() {
 		synchronized (symbols) {
-			for (char c = 'A';  c < 'Q'; c++)
-				symbols.add(new RollSymbol(c));
+			for (int i = 0; i < 18; i++)
+				symbols.add(new RollSymbol(characterPool.remove()));
 
 			symbols.notifyAll();
 		}
@@ -65,6 +70,8 @@ public class RollBox {
 
 				while (running) {
 					synchronized (symbols) {
+						System.out.println("Rolling " + symbols.size() + " symbols");
+
 						long time = System.currentTimeMillis();
 						long nextWakeUp = Long.MAX_VALUE;
 
@@ -148,6 +155,51 @@ public class RollBox {
 						running = false;
 					}
 				}
+			}
+		}.start();
+	}
+
+	public void startShuffler() {
+		new Thread(rollBoxGroup, "Shuffler") {
+			private boolean dir = true;
+			private Random random = new Random();
+
+			@Override
+			public void run() {
+				boolean running = true;
+				
+				while (running) {
+					if (dir) {
+						long time = System.currentTimeMillis();
+
+						synchronized (symbols) {
+							int pos = random.nextInt(symbols.size() + 1);
+							RollSymbol symbol = new RollSymbol(characterPool.remove());
+							symbol.setWakeUpProvider(new SecondWakeUpProvider(10 * pos), time);
+							symbols.add(pos, symbol);
+
+							System.out.println("Symbol " + symbol.getName() + " added");
+						}
+					} else {
+						synchronized (symbols) {
+							int pos = random.nextInt(symbols.size());
+							char c = symbols.remove(pos).getName();
+							characterPool.add(c);
+
+							System.out.println("Symbol " + c + " removed");
+						}
+					}
+
+					dir = !dir;
+
+					try {
+						sleep(17000L);
+					} catch (InterruptedException e) {
+						running = false;
+					}
+				}
+
+				System.out.println("Shuffler stopped");
 			}
 		}.start();
 	}

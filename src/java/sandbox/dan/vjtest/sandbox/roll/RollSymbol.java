@@ -64,4 +64,8 @@ public class RollSymbol {
 		this.wakeUpProvider = wakeUpProvider;
 		this.wakeUpTime = wakeUpProvider.getNextWakeUp(time);
 	}
+
+	public char getName() {
+		return name;
+	}
 }
