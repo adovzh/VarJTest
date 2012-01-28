@@ -3,12 +3,12 @@ package dan.vjtest.sandbox.util;
 /**
  * @author Alexander Dovzhikov
  */
-public class SimpleQueue<T> implements Queue<T> {
+public class ArrayQueue<T> implements Queue<T> {
     private final T[] data;
     private int head;
     private int tail;
 
-    public SimpleQueue(int capacity) {
+    public ArrayQueue(int capacity) {
         data = (T[]) new Object[capacity + 1];
         head = tail = 0;
     }
