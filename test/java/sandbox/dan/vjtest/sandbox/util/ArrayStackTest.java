@@ -32,7 +32,7 @@ public class ArrayStackTest {
             stack.pop();
             Assert.fail("Underflow must occur");
         } catch (IllegalStateException e) {
-            Assert.assertEquals("stack underflow", e.getMessage());
+            Assert.assertEquals("underflow", e.getMessage());
         }
     }
 
@@ -51,7 +51,7 @@ public class ArrayStackTest {
                 if (i < 5)
                     Assert.fail("Overflow should not occur: " + i);
                 else
-                    Assert.assertEquals("stack overflow", e.getMessage());
+                    Assert.assertEquals("overflow", e.getMessage());
             }
         }
     }

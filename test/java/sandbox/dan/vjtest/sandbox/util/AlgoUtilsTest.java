@@ -64,7 +64,7 @@ public class AlgoUtilsTest {
     
     @Test
     public void testAll() {
-        int numTests = 1000;
+        int numTests = 100;
         
         for (int round = 1; round <= numTests; round++) {
             // prepare data
