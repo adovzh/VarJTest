@@ -14,17 +14,25 @@ public class ArrayStack<T> implements Stack<T> {
 
     @Override
     public void push(T elem) {
-        if (top == data.length)
-            throw new IllegalStateException("stack overflow");
+        if (isFull())
+            throw new IllegalStateException("overflow");
 
         data[top++] = elem;
     }
 
     @Override
     public T pop() {
-        if (top == 0)
-            throw new IllegalStateException("stack underflow");
+        if (isEmpty())
+            throw new IllegalStateException("underflow");
 
         return data[--top];
+    }
+
+    public boolean isEmpty() {
+        return top == 0;
+    }
+
+    public boolean isFull() {
+        return top == data.length;
     }
 }

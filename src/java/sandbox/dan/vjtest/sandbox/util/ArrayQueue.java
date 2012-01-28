@@ -16,7 +16,7 @@ public class ArrayQueue<T> implements Queue<T> {
     @Override
     public void enqueue(T elem) {
         if (isFull())
-            throw new IllegalStateException("queue overflow");
+            throw new IllegalStateException("overflow");
 
         putElement(elem);
     }
@@ -24,7 +24,7 @@ public class ArrayQueue<T> implements Queue<T> {
     @Override
     public T dequeue() {
         if (isEmpty())
-            throw new IllegalStateException("queue underflow");
+            throw new IllegalStateException("underflow");
 
         return getElement();
     }

@@ -3,11 +3,9 @@ package dan.vjtest.sandbox.util;
 /**
  * @author Alexander Dovzhikov
  */
-public class ArrayQueueTest extends QueueTest {
-
+public class StackQueueTest extends QueueTest {
     @Override
     protected <T> Queue<T> createQueue(int capacity) {
-        return new ArrayQueue<>(capacity);
+        return new StackQueue<>(capacity);
     }
-
 }

@@ -6,44 +6,42 @@ import org.junit.Test;
 /**
  * @author Alexander Dovzhikov
  */
-public class ArrayStackTest {
+public abstract class QueueTest {
 
-    protected <T> Stack<T> createStack(int capacity) {
-        return new ArrayStack<>(capacity);
-    }
+    protected abstract <T> Queue<T> createQueue(int capacity);
 
     @Test
     public void order() {
-        Stack<Integer> stack = createStack(10);
+        Queue<Integer> queue = createQueue(10);
         int[] input = RandomUtils.randomIntArray(5);
 
-        for (int elem : input)
-            stack.push(elem);
+        for (int item : input)
+            queue.enqueue(item);
 
-        for (int i = input.length - 1; i >= 0; i--)
-            Assert.assertEquals(input[i], (long) stack.pop());
+        for (int item : input)
+            Assert.assertEquals(item, (long) queue.dequeue());
     }
 
     @Test
     public void underflow() {
-        Stack<Integer> stack = createStack(10);
+        Queue<Integer> queue = createQueue(10);
 
         try {
-            stack.pop();
+            queue.dequeue();
             Assert.fail("Underflow must occur");
         } catch (IllegalStateException e) {
-            Assert.assertEquals("stack underflow", e.getMessage());
+            Assert.assertEquals("underflow", e.getMessage());
         }
     }
 
     @Test
     public void overflow() {
-        Stack<Integer> stack = createStack(5);
+        Queue<Integer> queue = createQueue(5);
         int[] input = RandomUtils.randomIntArray(10);
 
         for (int i = 0; i < input.length; i++) {
             try {
-                stack.push(input[i]);
+                queue.enqueue(input[i]);
 
                 if (i >= 5)
                     Assert.fail("Overflow must occur");
@@ -51,7 +49,7 @@ public class ArrayStackTest {
                 if (i < 5)
                     Assert.fail("Overflow should not occur: " + i);
                 else
-                    Assert.assertEquals("stack overflow", e.getMessage());
+                    Assert.assertEquals("overflow", e.getMessage());
             }
         }
     }
