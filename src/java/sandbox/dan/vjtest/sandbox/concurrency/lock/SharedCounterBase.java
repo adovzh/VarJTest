@@ -6,7 +6,7 @@ package dan.vjtest.sandbox.concurrency.lock;
 public class SharedCounterBase implements SharedCounter {
     
     public static SharedCounter createSharedCounter(String spec) {
-        if ("JVM".equalsIgnoreCase(spec))
+        if ("JVM".equalsIgnoreCase(spec.substring(0, 3)))
             return new JvmSharedCounter();
         else if ("JUC".equalsIgnoreCase(spec))
             return new JucSharedCounter();

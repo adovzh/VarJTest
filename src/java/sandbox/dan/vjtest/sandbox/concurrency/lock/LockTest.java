@@ -60,9 +60,8 @@ public class LockTest {
         SharedCounter counter = runTest();
         long duration = System.nanoTime() - start;
 
-        System.out.printf("%d threads, duration %,d (ns)\n", numThreads, duration);
-        System.out.printf("%,d ns/op\n", duration / iterations);
-        System.out.printf("%,d ops/s\n", (iterations * 1000000000L) / duration);
-        System.out.println("counter = " + counter.getValue());
+        System.out.printf("\"%s\",\"%d\",\"%d\",\"%d\",\"%d\",\"%d\"%n",
+                spec, numThreads, duration, duration / iterations,
+                (iterations * 1000000000L) / duration, counter.getValue());
     }
 }
