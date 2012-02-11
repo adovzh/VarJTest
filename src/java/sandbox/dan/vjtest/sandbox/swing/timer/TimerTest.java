@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Alexander Dovzhikov <alexander.dovzhikov@gmail.com>.
+ * Copyright (c) 2012 Alexander Dovzhikov <alexander.dovzhikov@gmail.com>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
@@ -24,7 +24,7 @@
  *
  * TimerTest.java
  *
- * Created on 05.10.2011 19:21:10
+ * Created on 07.02.2012 17:29:28
  */
 
 package dan.vjtest.sandbox.swing.timer;
