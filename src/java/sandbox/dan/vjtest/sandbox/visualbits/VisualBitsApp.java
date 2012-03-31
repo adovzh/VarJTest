@@ -29,7 +29,7 @@
 
 package dan.vjtest.sandbox.visualbits;
 
-import dan.vjtest.sandbox.swing.util.UIUtil;
+import dan.agate.swing.UIUtil;
 
 import javax.swing.*;
 

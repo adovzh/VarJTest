@@ -1,6 +1,6 @@
 package dan.vjtest.sandbox.count;
 
-import dan.vjtest.sandbox.swing.util.UIUtil;
+import dan.agate.swing.UIUtil;
 
 import javax.swing.*;
 import java.awt.*;

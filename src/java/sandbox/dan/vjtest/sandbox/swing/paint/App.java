@@ -29,7 +29,7 @@
 
 package dan.vjtest.sandbox.swing.paint;
 
-import dan.vjtest.sandbox.swing.util.UIUtil;
+import dan.agate.swing.UIUtil;
 
 import javax.swing.*;
 import java.awt.*;

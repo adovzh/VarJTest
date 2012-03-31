@@ -29,6 +29,8 @@
 
 package dan.vjtest.sandbox.swing.util;
 
+import dan.agate.swing.UIUtil;
+
 import javax.swing.*;
 import java.awt.*;
 
